@@ -1,0 +1,556 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 110;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		71431E2C2FFCCCAC0065E87A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71431E162FFCCCAB0065E87A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71431E1D2FFCCCAB0065E87A;
+			remoteInfo = odbr;
+		};
+		71431E362FFCCCAC0065E87A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 71431E162FFCCCAB0065E87A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71431E1D2FFCCCAB0065E87A;
+			remoteInfo = odbr;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		71431E1E2FFCCCAB0065E87A /* odbr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = odbr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		71431E2B2FFCCCAC0065E87A /* odbrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = odbrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		71431E352FFCCCAC0065E87A /* odbrUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = odbrUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		71431E202FFCCCAB0065E87A /* odbr */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = odbr;
+			sourceTree = "<group>";
+		};
+		71431E2E2FFCCCAC0065E87A /* odbrTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = odbrTests;
+			sourceTree = "<group>";
+		};
+		71431E382FFCCCAC0065E87A /* odbrUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = odbrUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		71431E1B2FFCCCAB0065E87A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		71431E282FFCCCAC0065E87A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+		71431E322FFCCCAC0065E87A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		71431E152FFCCCAB0065E87A = {
+			isa = PBXGroup;
+			children = (
+				71431E202FFCCCAB0065E87A /* odbr */,
+				71431E2E2FFCCCAC0065E87A /* odbrTests */,
+				71431E382FFCCCAC0065E87A /* odbrUITests */,
+				71431E1F2FFCCCAB0065E87A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		71431E1F2FFCCCAB0065E87A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				71431E1E2FFCCCAB0065E87A /* odbr.app */,
+				71431E2B2FFCCCAC0065E87A /* odbrTests.xctest */,
+				71431E352FFCCCAC0065E87A /* odbrUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		71431E1D2FFCCCAB0065E87A /* odbr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71431E3D2FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbr" */;
+			buildPhases = (
+				71431E1A2FFCCCAB0065E87A /* Sources */,
+				71431E1B2FFCCCAB0065E87A /* Frameworks */,
+				71431E1C2FFCCCAB0065E87A /* Resources */,
+			);
+			buildRules = (
+			);
+			fileSystemSynchronizedGroups = (
+				71431E202FFCCCAB0065E87A /* odbr */,
+			);
+			name = odbr;
+			productName = odbr;
+			productReference = 71431E1E2FFCCCAB0065E87A /* odbr.app */;
+			productType = "com.apple.product-type.application";
+		};
+		71431E2A2FFCCCAC0065E87A /* odbrTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71431E402FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrTests" */;
+			buildPhases = (
+				71431E272FFCCCAC0065E87A /* Sources */,
+				71431E282FFCCCAC0065E87A /* Frameworks */,
+				71431E292FFCCCAC0065E87A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71431E2D2FFCCCAC0065E87A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				71431E2E2FFCCCAC0065E87A /* odbrTests */,
+			);
+			name = odbrTests;
+			productName = odbrTests;
+			productReference = 71431E2B2FFCCCAC0065E87A /* odbrTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		71431E342FFCCCAC0065E87A /* odbrUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 71431E432FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrUITests" */;
+			buildPhases = (
+				71431E312FFCCCAC0065E87A /* Sources */,
+				71431E322FFCCCAC0065E87A /* Frameworks */,
+				71431E332FFCCCAC0065E87A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				71431E372FFCCCAC0065E87A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				71431E382FFCCCAC0065E87A /* odbrUITests */,
+			);
+			name = odbrUITests;
+			productName = odbrUITests;
+			productReference = 71431E352FFCCCAC0065E87A /* odbrUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		71431E162FFCCCAB0065E87A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					71431E1D2FFCCCAB0065E87A = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					71431E2A2FFCCCAC0065E87A = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 71431E1D2FFCCCAB0065E87A;
+					};
+					71431E342FFCCCAC0065E87A = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 71431E1D2FFCCCAB0065E87A;
+					};
+				};
+			};
+			buildConfigurationList = 71431E192FFCCCAB0065E87A /* Build configuration list for PBXProject "odbr" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 71431E152FFCCCAB0065E87A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 71431E1F2FFCCCAB0065E87A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71431E1D2FFCCCAB0065E87A /* odbr */,
+				71431E2A2FFCCCAC0065E87A /* odbrTests */,
+				71431E342FFCCCAC0065E87A /* odbrUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		71431E1C2FFCCCAB0065E87A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		71431E292FFCCCAC0065E87A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		71431E332FFCCCAC0065E87A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		71431E1A2FFCCCAB0065E87A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		71431E272FFCCCAC0065E87A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+		71431E312FFCCCAC0065E87A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		71431E2D2FFCCCAC0065E87A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71431E1D2FFCCCAB0065E87A /* odbr */;
+			targetProxy = 71431E2C2FFCCCAC0065E87A /* PBXContainerItemProxy */;
+		};
+		71431E372FFCCCAC0065E87A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71431E1D2FFCCCAB0065E87A /* odbr */;
+			targetProxy = 71431E362FFCCCAC0065E87A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		71431E3B2FFCCCAC0065E87A /* Debug configuration for PBXProject "odbr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		71431E3C2FFCCCAC0065E87A /* Release configuration for PBXProject "odbr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		71431E3E2FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "쓰레기 사진을 촬영해 분리배출 방법을 안내하기 위해 카메라 접근이 필요합니다.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		71431E3F2FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbr" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "쓰레기 사진을 촬영해 분리배출 방법을 안내하기 위해 카메라 접근이 필요합니다.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		71431E412FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/odbr.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/odbr";
+			};
+			name = Debug;
+		};
+		71431E422FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/odbr.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/odbr";
+			};
+			name = Release;
+		};
+		71431E442FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = odbr;
+			};
+			name = Debug;
+		};
+		71431E452FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrUITests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y7URQU6626;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = odbr;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		71431E192FFCCCAB0065E87A /* Build configuration list for PBXProject "odbr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71431E3B2FFCCCAC0065E87A /* Debug configuration for PBXProject "odbr" */,
+				71431E3C2FFCCCAC0065E87A /* Release configuration for PBXProject "odbr" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		71431E3D2FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71431E3E2FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbr" */,
+				71431E3F2FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbr" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		71431E402FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71431E412FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrTests" */,
+				71431E422FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrTests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		71431E432FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				71431E442FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrUITests" */,
+				71431E452FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrUITests" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 71431E162FFCCCAB0065E87A /* Project object */;
+	validationLevel = 1;
+}
