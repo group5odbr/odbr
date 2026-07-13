@@ -10,15 +10,15 @@ nonisolated enum RecognitionSource: Equatable, Sendable {
     var title: String {
         switch self {
         case .mark:
-            "마크 우선"
+            "분리배출 마크 확인"
         case .combined:
-            "이중 확인"
+            "사진과 마크 함께 확인"
         case .multimodalAI:
-            "멀티모달 AI"
+            "AI 사진 확인"
         case .localFallback:
-            "로컬 안전 판정"
+            "기본 안전 안내"
         case .userCorrection:
-            "사용자 보정"
+            "직접 고른 결과"
         }
     }
 }
@@ -44,7 +44,7 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
     var title: String {
         switch self {
         case .pet:
-            "페트병"
+            "투명 음료 페트병"
         case .plastic:
             "플라스틱류"
         case .vinyl:
@@ -54,11 +54,11 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
         case .paperPack:
             "종이팩류"
         case .can:
-            "캔류"
+            "음료·식품 캔류"
         case .glass:
-            "유리류"
+            "유리병류"
         case .styrofoam:
-            "스티로폼"
+            "스티로폼 포장재"
         case .general:
             "일반쓰레기"
         case .unknown:
@@ -69,25 +69,25 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
     var materialHint: String {
         switch self {
         case .pet:
-            "PET, 무색페트"
+            "색이 없는 투명 생수병·음료병"
         case .plastic:
-            "PP, PE, PS, OTHER"
+            "단단한 플라스틱 용기와 트레이"
         case .vinyl:
-            "비닐류, LDPE, HDPE"
+            "비닐봉투와 포장 비닐"
         case .paper:
-            "종이, PAPER"
+            "신문·책·상자·종이봉투"
         case .paperPack:
-            "종이팩, 멸균팩, 우유팩"
+            "우유팩·주스팩·두유팩"
         case .can:
-            "철, 알루미늄, 캔류"
+            "음료캔과 통조림캔"
         case .glass:
-            "유리병"
+            "음료·식품 유리병"
         case .styrofoam:
-            "스티로폼, EPS, 발포합성수지"
+            "포장·완충용 스티로폼"
         case .general:
-            "비재활용 품목, 심한 오염, 복합재질"
+            "영수증·휴지·오염된 포장처럼 재활용하기 어려운 물건"
         case .unknown:
-            "재질이나 표기를 더 가까이 촬영"
+            "물건과 분리배출 표시를 더 가까이 찍어주세요"
         }
     }
 
@@ -117,32 +117,12 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
     }
 
     var guideSteps: [String] {
-        switch self {
-        case .pet:
-            ["내용물을 비우고 물로 헹구기", "라벨을 제거하기", "가능하면 압착한 뒤 뚜껑을 닫아 배출"]
-        case .plastic:
-            ["내용물을 비우고 헹구기", "다른 재질 부착물 분리", "오염이 심하면 지자체 기준 확인"]
-        case .vinyl:
-            ["이물질 제거", "젖거나 오염된 비닐은 확인 필요", "비닐류 배출함에 모아 배출"]
-        case .paper:
-            ["테이프와 코팅 부착물 제거", "젖은 종이는 말린 뒤 확인", "상자는 펼쳐서 배출"]
-        case .paperPack:
-            ["내용물을 비우고 헹구기", "빨대와 비닐 코팅 부착물 제거", "펼쳐 말린 뒤 종이팩류로 배출"]
-        case .can:
-            ["내용물을 비우고 이물질을 제거하기", "가능하면 가볍게 압착하기", "금속캔류 배출함 또는 지역 기준에 맞춰 배출"]
-        case .glass:
-            ["내용물을 비우고 물로 헹구기", "소주·맥주 빈용기보증금 대상이면 소매점 반납 확인", "깨진 유리는 신문지에 감싸 종량제·지자체 기준으로 배출"]
-        case .styrofoam:
-            ["테이프와 운송장 제거", "음식물이나 이물질 제거", "오염이 심하면 일반쓰레기 후보로 확인"]
-        case .general:
-            ["비재활용 품목인지 확인", "분리 가능한 재질은 먼저 분리", "오염·복합재질 기준은 지자체 안내 확인"]
-        case .unknown:
-            ["물체 하나만 화면 중앙에 놓기", "분리배출 표기나 재질이 보이게 가까이 촬영", "흔들림과 강한 반사를 피해서 다시 촬영"]
-        }
+        DisposalPolicyCatalog.policy(for: .category(self)).preparationSteps
     }
 
     var canUseNephron: Bool {
-        self == .pet || self == .can
+        let eligibility = DisposalPolicyCatalog.policy(for: .category(self)).nephronEligibility
+        return eligibility == .likelyEligible || eligibility == .checkMachine
     }
 }
 
@@ -188,6 +168,7 @@ nonisolated enum MultimodalEvidenceBasis: String, Codable, CaseIterable, Sendabl
     case nonRecyclableItem
     case contamination
     case composite
+    case safetyHazard
     case conflicting
     case insufficient
 }
@@ -224,7 +205,7 @@ nonisolated struct DisposalPartDecision: Codable, Equatable, Sendable {
 }
 
 nonisolated struct MultimodalDisposalDecision: Codable, Equatable, Sendable {
-    let category: DisposalCategory
+    let route: DisposalRoute
     let objectName: String
     let confidence: Int
     let basis: MultimodalEvidenceBasis
@@ -232,6 +213,10 @@ nonisolated struct MultimodalDisposalDecision: Codable, Equatable, Sendable {
     let alternatives: [DisposalCategory]
     let captureIssue: CaptureIssue
     let parts: [DisposalPartDecision]
+    let hazards: [DisposalHazard]
+    let nephronEligibility: NephronEligibility
+
+    var category: DisposalCategory { route.legacyCategory }
 
     init(
         category: DisposalCategory,
@@ -241,9 +226,11 @@ nonisolated struct MultimodalDisposalDecision: Codable, Equatable, Sendable {
         visibleMark: String,
         alternatives: [DisposalCategory],
         captureIssue: CaptureIssue,
-        parts: [DisposalPartDecision] = []
+        parts: [DisposalPartDecision] = [],
+        hazards: [DisposalHazard] = [],
+        nephronEligibility: NephronEligibility? = nil
     ) {
-        self.category = category
+        self.route = .category(category)
         self.objectName = objectName
         self.confidence = confidence
         self.basis = basis
@@ -251,17 +238,48 @@ nonisolated struct MultimodalDisposalDecision: Codable, Equatable, Sendable {
         self.alternatives = alternatives
         self.captureIssue = captureIssue
         self.parts = parts
+        self.hazards = hazards
+        self.nephronEligibility = nephronEligibility
+            ?? DisposalPolicyCatalog.policy(for: .category(category)).nephronEligibility
+    }
+
+    init(
+        route: DisposalRoute,
+        objectName: String,
+        confidence: Int,
+        basis: MultimodalEvidenceBasis,
+        visibleMark: String,
+        alternatives: [DisposalCategory],
+        captureIssue: CaptureIssue,
+        parts: [DisposalPartDecision] = [],
+        hazards: [DisposalHazard] = [],
+        nephronEligibility: NephronEligibility? = nil
+    ) {
+        self.route = route
+        self.objectName = objectName
+        self.confidence = confidence
+        self.basis = basis
+        self.visibleMark = visibleMark
+        self.alternatives = alternatives
+        self.captureIssue = captureIssue
+        self.parts = parts
+        self.hazards = hazards
+        self.nephronEligibility = nephronEligibility
+            ?? DisposalPolicyCatalog.policy(for: route).nephronEligibility
     }
 }
 
 nonisolated struct DisposalResult: Identifiable, Sendable {
     let id = UUID()
-    var category: DisposalCategory
+    var route: DisposalRoute
     var source: RecognitionSource
     var confidence: Int
     var evidences: [DisposalEvidence]
     var candidates: [DisposalCategory]
     var specificSteps: [String]
+    var nephronEligibility: NephronEligibility
+
+    var category: DisposalCategory { route.legacyCategory }
 
     init(
         category: DisposalCategory,
@@ -269,36 +287,64 @@ nonisolated struct DisposalResult: Identifiable, Sendable {
         confidence: Int,
         evidences: [DisposalEvidence],
         candidates: [DisposalCategory],
-        specificSteps: [String] = []
+        specificSteps: [String] = [],
+        nephronEligibility: NephronEligibility? = nil
     ) {
-        self.category = category
+        self.route = .category(category)
         self.source = source
         self.confidence = confidence
         self.evidences = evidences
         self.candidates = candidates
         self.specificSteps = specificSteps
+        self.nephronEligibility = nephronEligibility
+            ?? DisposalPolicyCatalog.policy(for: .category(category)).nephronEligibility
+    }
+
+    init(
+        route: DisposalRoute,
+        source: RecognitionSource,
+        confidence: Int,
+        evidences: [DisposalEvidence],
+        candidates: [DisposalCategory],
+        specificSteps: [String] = [],
+        nephronEligibility: NephronEligibility? = nil
+    ) {
+        self.route = route
+        self.source = source
+        self.confidence = confidence
+        self.evidences = evidences
+        self.candidates = candidates
+        self.specificSteps = specificSteps
+        self.nephronEligibility = nephronEligibility
+            ?? DisposalPolicyCatalog.policy(for: route).nephronEligibility
     }
 
     var canUseNephron: Bool {
-        category.canUseNephron
+        nephronEligibility == .likelyEligible || nephronEligibility == .checkMachine
     }
 
     var title: String {
-        category.title
+        route.title
     }
 
     var isUncertain: Bool {
-        category == .unknown
+        route == .unknown
     }
 
     func corrected(to category: DisposalCategory) -> DisposalResult {
-        DisposalResult(
-            category: category,
+        corrected(to: .category(category))
+    }
+
+    func corrected(to route: DisposalRoute) -> DisposalResult {
+        let policy = DisposalPolicyCatalog.policy(for: route)
+        return DisposalResult(
+            route: route,
             source: .userCorrection,
             confidence: 100,
-            evidences: [DisposalEvidence(title: "보정", detail: "사용자가 결과를 \(category.title)로 수정")],
-            candidates: DisposalCategory.disposalCases.filter { $0 != category },
-            specificSteps: category.guideSteps
+            evidences: [DisposalEvidence(title: "직접 선택", detail: "사용자가 \(route.title)을 선택했어요.")],
+            candidates: candidates,
+            specificSteps: policy.preparationSteps,
+            nephronEligibility: policy.nephronEligibility
         )
     }
 

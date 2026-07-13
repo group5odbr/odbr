@@ -30,6 +30,8 @@ enum AppTab: Hashable {
 
 struct ContentView: View {
     @State private var selectedTab: AppTab
+    @State private var nephronContext: NephronContext?
+    @State private var presentedSheet: AppSheet?
 
     init() {
         _selectedTab = State(initialValue: AppTab.initialTab)
@@ -37,19 +39,23 @@ struct ContentView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            ScanView(selectedTab: $selectedTab)
+            ScanView(
+                selectedTab: $selectedTab,
+                nephronContext: $nephronContext,
+                onShowInformation: showInformation
+            )
                 .tabItem {
                     Label(AppTab.scan.title, systemImage: AppTab.scan.systemImage)
                 }
                 .tag(AppTab.scan)
 
-            SearchView()
+            SearchView(onShowInformation: showInformation)
                 .tabItem {
                     Label(AppTab.search.title, systemImage: AppTab.search.systemImage)
                 }
                 .tag(AppTab.search)
 
-            NephronView()
+            NephronView(context: nephronContext, onShowInformation: showInformation)
                 .tabItem {
                     Label(AppTab.nephron.title, systemImage: AppTab.nephron.systemImage)
                 }
@@ -57,7 +63,23 @@ struct ContentView: View {
         }
         .tint(AppTheme.accent)
         .accessibilityIdentifier("app.tabs")
+        .sheet(item: $presentedSheet) { sheet in
+            switch sheet {
+            case .information:
+                AppInformationView()
+            }
+        }
     }
+
+    private func showInformation() {
+        presentedSheet = .information
+    }
+}
+
+private enum AppSheet: String, Identifiable {
+    case information
+
+    var id: String { rawValue }
 }
 
 private extension AppTab {

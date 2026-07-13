@@ -5,12 +5,14 @@ struct ResultCard: View {
     let onShowNephron: () -> Void
 
     @State private var confirmedResultID: UUID?
+    @State private var correctionRequest: CorrectionRequest?
 
     var body: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.lg) {
             resultHeader
             evidenceChips
             preparationSteps
+            warnings
             correctionChips
 
             if result.canUseNephron {
@@ -25,11 +27,24 @@ struct ResultCard: View {
             highlighted: result.source != .userCorrection && !result.isUncertain,
             warning: result.isUncertain
         )
+        .sheet(item: $correctionRequest) { request in
+            CorrectionSheet(result: request.result) { route in
+                correctResult(to: route)
+            }
+        }
+        .onChange(of: result.id) { _, newID in
+            if confirmedResultID != newID {
+                confirmedResultID = nil
+            }
+        }
     }
 
     private var resultHeader: some View {
         HStack(alignment: .top, spacing: AppTheme.Spacing.md) {
-            IconTile(systemName: result.category.symbolName, tint: result.category.tint)
+            IconTile(
+                systemName: result.route.symbolName,
+                tint: result.isUncertain ? AppTheme.warning : AppTheme.accent
+            )
 
             VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
                 Text(result.title)
@@ -73,7 +88,7 @@ struct ResultCard: View {
 
     private var preparationSteps: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
-            Text(result.isUncertain ? "다시 촬영하는 방법" : "배출 전 처리")
+            Text(result.isUncertain ? "다시 찍는 방법" : "버리기 전에")
                 .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundStyle(AppTheme.primaryText)
 
@@ -85,6 +100,32 @@ struct ResultCard: View {
                     Text(step)
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(AppTheme.primaryText)
+                }
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var warnings: some View {
+        let policy = DisposalPolicyCatalog.policy(for: result.route)
+        if !policy.warnings.isEmpty || policy.localVariationRequired {
+            VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
+                Text("주의사항")
+                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .foregroundStyle(AppTheme.primaryText)
+
+                ForEach(policy.warnings, id: \.self) { warning in
+                    Label(warning, systemImage: "exclamationmark.triangle.fill")
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundStyle(AppTheme.primaryText)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                if policy.localVariationRequired {
+                    Label("사는 곳마다 배출 방법이 다를 수 있으니 우리 동네 안내를 먼저 확인해 주세요.", systemImage: "building.columns.fill")
+                        .font(.system(.subheadline, design: .rounded))
+                        .foregroundStyle(AppTheme.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
@@ -109,7 +150,7 @@ struct ResultCard: View {
             }
 
             if result.isUncertain {
-                Text("후보에 없어도 ‘아니에요’를 눌러 전체 배출 종류에서 선택할 수 있어요.")
+                Text("원하는 결과가 없어도 ‘아니에요’를 눌러 전체 목록에서 고를 수 있어요.")
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
                     .fixedSize(horizontal: false, vertical: true)
@@ -119,14 +160,14 @@ struct ResultCard: View {
 
     private var resultSubtitle: String {
         if result.isUncertain {
-            return "오답 방지를 위해 결과를 확정하지 않았어요"
+            return "정확히 알기 어려워 다시 확인이 필요해요"
         }
 
         if result.source == .userCorrection {
             return "사용자가 직접 선택한 배출 종류"
         }
 
-        return "\(result.source.title) · 신뢰도 \(result.confidence)%"
+        return result.source.title
     }
 
     private var displayedSteps: [String] {
@@ -149,12 +190,8 @@ struct ResultCard: View {
     }
 
     private var correctionMenu: some View {
-        Menu {
-            ForEach(DisposalCategory.disposalCases) { candidate in
-                Button(candidate.title) {
-                    correctResult(to: candidate)
-                }
-            }
+        Button {
+            correctionRequest = CorrectionRequest(result: result)
         } label: {
             Label("아니에요", systemImage: "hand.thumbsdown.fill")
         }
@@ -162,11 +199,83 @@ struct ResultCard: View {
         .accessibilityIdentifier("result.correct")
     }
 
-    private func correctResult(to category: DisposalCategory) {
+    private func correctResult(to route: DisposalRoute) {
         withAnimation(.easeInOut(duration: 0.18)) {
-            let correctedResult = result.corrected(to: category)
+            let correctedResult = result.corrected(to: route)
             result = correctedResult
-            confirmedResultID = correctedResult.id
+            confirmedResultID = nil
         }
+    }
+}
+
+private struct CorrectionRequest: Identifiable {
+    let id = UUID()
+    let result: DisposalResult
+}
+
+private struct CorrectionSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let result: DisposalResult
+    let onSelect: (DisposalRoute) -> Void
+
+    private var ranked: [CorrectionCandidate] {
+        CorrectionCandidateBuilder.ranked(for: result)
+    }
+
+    private var remaining: [DisposalRoute] {
+        CorrectionCandidateBuilder.allRoutes(excluding: result)
+    }
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if !ranked.isEmpty {
+                    Section("AI가 찾은 다음 후보") {
+                        ForEach(ranked) { candidate in
+                            routeButton(candidate.route, reason: candidate.reason.title)
+                        }
+                    }
+                }
+
+                Section("전체 버리는 방법") {
+                    ForEach(remaining) { route in
+                        routeButton(route, reason: DisposalPolicyCatalog.policy(for: route).summary)
+                    }
+                }
+            }
+            .navigationTitle("다른 방법 선택")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("닫기") { dismiss() }
+                }
+            }
+            .accessibilityIdentifier("result.correctionSheet")
+        }
+    }
+
+    private func routeButton(_ route: DisposalRoute, reason: String) -> some View {
+        Button {
+            onSelect(route)
+            dismiss()
+        } label: {
+            HStack(alignment: .top, spacing: AppTheme.Spacing.md) {
+                Image(systemName: route.symbolName)
+                    .foregroundStyle(AppTheme.accent)
+                    .frame(width: 24)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
+                    Text(route.title)
+                        .foregroundStyle(AppTheme.primaryText)
+                    Text(reason)
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.secondaryText)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+        .accessibilityLabel("\(route.title), \(reason)")
+        .accessibilityIdentifier("result.correction.\(route.id)")
     }
 }

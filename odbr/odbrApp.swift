@@ -14,6 +14,7 @@ import SwiftUI
 struct odbrApp: App {
     init() {
         FirebaseBootstrap.configureIfPossible()
+        RemoteConfiguration.configureIfPossible()
     }
 
     var body: some Scene {

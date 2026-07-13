@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ai_enabled</key>
+	<true/>
+	<key>search_ai_enabled</key>
+	<true/>
+	<key>primary_model_version</key>
+	<string>gemini-3.1-flash-lite</string>
+	<key>review_model_version</key>
+	<string>gemini-3.5-flash</string>
+	<key>search_model_version</key>
+	<string>gemini-3.1-flash-lite</string>
+	<key>prompt_version</key>
+	<string>observation-v1</string>
+	<key>policy_version</key>
+	<integer>2</integer>
+	<key>analysis_timeout</key>
+	<integer>12</integer>
+	<key>review_timeout</key>
+	<integer>8</integer>
+	<key>search_timeout</key>
+	<integer>8</integer>
+	<key>minimum_supported_app_version</key>
+	<string>1.0.0</string>
+</dict>
+</plist>

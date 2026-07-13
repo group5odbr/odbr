@@ -3,9 +3,11 @@ import SwiftUI
 struct SearchView: View {
     @State private var store: ProductSearchStore
     @State private var searchText = ""
+    let onShowInformation: () -> Void
 
-    init() {
+    init(onShowInformation: @escaping () -> Void = {}) {
         _store = State(initialValue: ProductSearchStore())
+        self.onShowInformation = onShowInformation
     }
 
     private var categories: [DisposalCategory] {
@@ -27,7 +29,8 @@ struct SearchView: View {
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xl) {
                     ScreenHeader(
                         title: "분리배출 검색",
-                        subtitle: "상품명이나 브랜드명을 찾고, 실제 포장 형태를 골라 확인해요."
+                        subtitle: "버릴 물건의 이름을 검색하고, 실제 모양과 가까운 것을 골라보세요.",
+                        onShowInformation: onShowInformation
                     )
 
                     SearchField(text: $searchText)
@@ -72,13 +75,13 @@ struct SearchView: View {
 
     private var popularQueries: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
-            Text("자주 찾는 검색어")
+            Text("헷갈리기 쉬운 품목")
                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                 .foregroundStyle(AppTheme.secondaryText)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: AppTheme.Spacing.sm) {
-                    ForEach(["콜라", "소주병", "인형", "컵라면", "화장품", "보조배터리"], id: \.self) { query in
+                    ForEach(["영수증", "고무장갑", "보조배터리", "깨진 유리", "프라이팬", "부탄가스"], id: \.self) { query in
                         Button(query) {
                             searchText = query
                         }
@@ -97,16 +100,16 @@ struct SearchView: View {
 
     private var productResults: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
-            if !categories.isEmpty {
-                categoryList
-            }
-
-            Text(store.hits.count == 1 ? "어떤 형태인가요?" : "비슷한 상품군을 찾았어요")
+            Text(store.hits.count == 1 ? "어떤 모양인가요?" : "비슷한 품목을 찾았어요")
                 .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundStyle(AppTheme.primaryText)
 
             ForEach(store.hits) { hit in
                 ProductFamilyResultCard(hit: hit)
+            }
+
+            if !categories.isEmpty {
+                categoryList
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,16 +118,16 @@ struct SearchView: View {
     private var remoteResults: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
             HStack(alignment: .firstTextBaseline) {
-                Text("상품 형태 선택")
+                Text("가장 비슷한 모양을 골라주세요")
                     .font(.system(.headline, design: .rounded, weight: .semibold))
                     .foregroundStyle(AppTheme.primaryText)
                 Spacer()
-                Text(store.aiState == .cached ? "저장된 결과" : "AI 보강")
+                Text(store.aiState == .cached ? "이전에 찾은 결과" : "AI 검색")
                     .font(.system(.caption, design: .rounded, weight: .semibold))
                     .foregroundStyle(AppTheme.deepGreen)
             }
 
-            Text("검색어만으로 재질을 확정하지 않고, 실제 물건과 가까운 형태를 골라요.")
+            Text("이름만으로는 재질을 알기 어려워요. 실제 물건과 가장 비슷한 모양을 골라주세요.")
                 .font(.system(.subheadline, design: .rounded))
                 .foregroundStyle(AppTheme.secondaryText)
                 .fixedSize(horizontal: false, vertical: true)
@@ -150,7 +153,7 @@ struct SearchView: View {
                 Text("‘\(trimmedSearchText)’ 검색 결과가 없어요")
                     .font(.system(.headline, design: .rounded, weight: .semibold))
                     .foregroundStyle(AppTheme.primaryText)
-                Text("상품 유형을 AI로 찾아 선택지를 만들거나, PET·캔류처럼 재질명을 검색해 보세요.")
+                Text("아직 검색 결과가 없어요. AI로 한 번 더 찾아보거나 다른 이름·재질로 검색해 보세요.")
                     .font(.system(.subheadline, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
                     .multilineTextAlignment(.center)
@@ -175,7 +178,7 @@ struct SearchView: View {
                         .tint(AppTheme.actionText)
                         .frame(maxWidth: .infinity)
                 } else {
-                    Label("AI로 상품 형태 찾기", systemImage: "sparkles")
+                    Label("AI로 다시 찾아보기", systemImage: "sparkles")
                 }
             }
             .buttonStyle(PrimaryActionButtonStyle())
@@ -188,11 +191,11 @@ struct SearchView: View {
                     store.requestAI()
                 }
             case .unsupported:
-                Text("안전하게 연결할 수 있는 상품 유형이 없어요. 실제 분리배출 표기나 재질명을 확인해 주세요.")
+                Text("AI로도 알맞은 품목을 찾지 못했어요. 물건의 다른 이름이나 재질을 검색해 보세요.")
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
             case .loading:
-                Text("상품 형태를 확인하는 중이에요. 잠시만 기다려 주세요.")
+                Text("AI가 비슷한 품목을 찾고 있어요. 잠시만 기다려 주세요.")
                     .font(.system(.caption, design: .rounded))
                     .foregroundStyle(AppTheme.secondaryText)
             default:
@@ -203,7 +206,7 @@ struct SearchView: View {
 
     private var categoryList: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
-            Text("재질별 기본 가이드")
+            Text("재질로 찾아보기")
                 .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundStyle(AppTheme.primaryText)
             ForEach(categories) { category in
@@ -218,10 +221,10 @@ struct SearchView: View {
             HStack(alignment: .top, spacing: AppTheme.Spacing.md) {
                 IconTile(systemName: "exclamationmark.triangle.fill", tint: AppTheme.warning, background: AppTheme.yellowSurface)
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
-                    Text("실물 표기와 지역 기준을 우선해요")
+                    Text("물건의 표시와 우리 동네 안내를 먼저 확인해요")
                         .font(.system(.headline, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.primaryText)
-                    Text("같은 상품도 포장 형태가 다를 수 있어요. 오염·복합재질·OTHER는 지자체 안내를 확인하세요.")
+                    Text("같은 상품도 포장 모양이 다를 수 있어요. 오염됐거나 여러 재질이 섞였다면 우리 동네 안내를 확인하세요.")
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(AppTheme.secondaryText)
                         .fixedSize(horizontal: false, vertical: true)
@@ -242,11 +245,11 @@ private struct SearchField: View {
                 .foregroundStyle(AppTheme.secondaryText)
                 .accessibilityHidden(true)
 
-            TextField("콜라, 소주병, 인형, PET", text: $text)
+            TextField("영수증, 보조배터리, 깨진 유리", text: $text)
                 .textInputAutocapitalization(.never)
                 .submitLabel(.search)
                 .font(.system(.body, design: .rounded))
-                .accessibilityLabel("상품·브랜드 검색")
+                .accessibilityLabel("버릴 품목 검색")
 
             if !text.isEmpty {
                 Button {
@@ -275,6 +278,16 @@ private struct SearchField: View {
 private struct ProductFamilyResultCard: View {
     let hit: ProductSearchHit
 
+    private var orderedVariants: [ProductVariant] {
+        let rank = Dictionary(uniqueKeysWithValues: hit.matchedVariantIDs.enumerated().map { ($1, $0) })
+        return hit.family.variants.sorted { lhs, rhs in
+            let lhsRank = rank[lhs.id] ?? Int.max
+            let rhsRank = rank[rhs.id] ?? Int.max
+            if lhsRank != rhsRank { return lhsRank < rhsRank }
+            return (hit.family.variants.firstIndex(of: lhs) ?? 0) < (hit.family.variants.firstIndex(of: rhs) ?? 0)
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
             HStack(alignment: .center, spacing: AppTheme.Spacing.md) {
@@ -282,7 +295,7 @@ private struct ProductFamilyResultCard: View {
                     Text(hit.family.name)
                         .font(.system(.headline, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.primaryText)
-                    Text("실제 포장과 가장 가까운 형태를 선택하세요")
+                    Text("내가 버릴 물건과 가장 비슷한 모양을 고르세요")
                         .font(.system(.caption, design: .rounded))
                         .foregroundStyle(AppTheme.secondaryText)
                 }
@@ -296,7 +309,7 @@ private struct ProductFamilyResultCard: View {
                     .clipShape(Capsule())
             }
 
-            ForEach(hit.family.variants) { variant in
+            ForEach(orderedVariants) { variant in
                 NavigationLink(value: variant) {
                     ProductVariantChoiceCard(variant: variant)
                 }
@@ -358,8 +371,8 @@ private struct ProductVariantDetailView: View {
                 if !variant.parts.isEmpty {
                     VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
                         DetailSectionHeader(
-                            title: "부위별로 나눠 보기",
-                            subtitle: "본체와 부착물을 각각 확인해요."
+                            title: "부분별로 나눠 보기",
+                            subtitle: "본체와 붙어 있는 부분을 각각 확인해요."
                         )
                         ForEach(variant.parts) { part in
                             ProductPartGuideCard(part: part)
@@ -378,7 +391,7 @@ private struct ProductVariantDetailView: View {
                         .foregroundStyle(AppTheme.secondaryText)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .utilityCard(warning: variant.origin == .aiGenerated)
+                        .utilityCard()
                 }
 
                 officialGuideCard
@@ -402,7 +415,7 @@ private struct ProductVariantDetailView: View {
                     tint: variant.destination == .municipalCheck ? AppTheme.warning : AppTheme.accent
                 )
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
-                    Text("주 배출 경로")
+                    Text("어디에 버리나요?")
                         .font(.system(.caption, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.secondaryText)
                     Text(variant.destination.title)
@@ -420,15 +433,6 @@ private struct ProductVariantDetailView: View {
                 .foregroundStyle(AppTheme.primaryText)
                 .fixedSize(horizontal: false, vertical: true)
 
-            if variant.origin == .aiGenerated {
-                Label(
-                    "AI가 제안한 유형이에요. 실제 분리배출 표기와 재질을 반드시 확인하세요.",
-                    systemImage: "exclamationmark.triangle.fill"
-                )
-                .font(.system(.caption, design: .rounded, weight: .semibold))
-                .foregroundStyle(AppTheme.warning)
-                .fixedSize(horizontal: false, vertical: true)
-            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .utilityCard(
@@ -440,8 +444,8 @@ private struct ProductVariantDetailView: View {
     private var preparationCard: some View {
         VStack(alignment: .leading, spacing: AppTheme.Spacing.md) {
             DetailSectionHeader(
-                title: "배출 전 처리",
-                subtitle: "배출 전에 순서대로 확인해요."
+                title: "버리기 전에",
+                subtitle: "아래 내용을 순서대로 확인해요."
             )
 
             VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
@@ -587,8 +591,6 @@ private struct CategoryGuideCard: View {
         .accessibilityElement(children: .combine)
     }
 }
-
-typealias GuideView = SearchView
 
 #Preview {
     SearchView()

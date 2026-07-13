@@ -11,11 +11,15 @@ import Testing
 
 struct odbrTests {
 
-    @Test func multimodalRequestTimeoutAllowsMobileImageAnalysis() {
-        #expect(MultimodalDisposalInferencer.requestTimeout == 12)
-        #expect(MultimodalDisposalInferencer.precisionReviewTimeout == 8)
-        #expect(MultimodalDisposalInferencer.primaryModelName == "gemini-3.1-flash-lite")
-        #expect(MultimodalDisposalInferencer.precisionReviewModelName == "gemini-3.5-flash")
+    @Test func remoteConfigDefaultsPreserveSafeAISettings() throws {
+        let url = try #require(Bundle.main.url(forResource: "RemoteConfigDefaults", withExtension: "plist"))
+        let defaults = try #require(NSDictionary(contentsOf: url) as? [String: Any])
+
+        #expect(defaults["ai_enabled"] as? Bool == true)
+        #expect(defaults["analysis_timeout"] as? Int == 12)
+        #expect(defaults["review_timeout"] as? Int == 8)
+        #expect(defaults["primary_model_version"] as? String == "gemini-3.1-flash-lite")
+        #expect(defaults["review_model_version"] as? String == "gemini-3.5-flash")
     }
 
     @Test func onlineFailureReasonIsShownWhenNoLocalEvidenceExists() {
@@ -27,7 +31,7 @@ struct odbrTests {
 
         #expect(result.category == .unknown)
         #expect(result.evidences.contains {
-            $0.title == "판정 보류" && $0.detail.contains("Gemini 서버가 일시적으로 혼잡")
+            $0.title == "다시 확인이 필요해요" && $0.detail.contains("Gemini 서버가 일시적으로 혼잡")
         })
     }
 
@@ -51,9 +55,9 @@ struct odbrTests {
 
         #expect(result.category == .unknown)
         #expect(result.evidences.contains {
-            $0.title == "온라인 정밀 판정 불가" && $0.detail == serverReason
+            $0.title == "AI 추가 확인 불가" && $0.detail == serverReason
         })
-        #expect(result.evidences.contains { $0.title == "판정 보류" })
+        #expect(result.evidences.contains { $0.title == "다시 확인이 필요해요" })
     }
 
     @Test func ocrProductCopyDoesNotCreateWeakMaterialSignal() {
@@ -451,7 +455,7 @@ struct odbrTests {
         let soju = repository.search("참이슬").first?.family.variants ?? []
         let doll = repository.search("인형").first?.family.variants ?? []
 
-        #expect(soju.contains { $0.destination == .category(.glass) && $0.flags.contains(.returnDepositBottle) })
+        #expect(soju.contains { $0.destination == .depositReturn && $0.flags.contains(.returnDepositBottle) })
         #expect(soju.contains { $0.destination == .category(.plastic) })
         #expect(doll.contains { $0.destination == .largeWaste })
         #expect(doll.contains { $0.destination == .smallElectronicsCollection })
@@ -465,20 +469,13 @@ struct odbrTests {
         #expect(repository.search("보조 배터리").first?.family.id == "power_bank")
     }
 
-    @Test func productSearchCacheExpiresAndKeepsGeneratedChoices() {
+    @Test func productSearchCacheExpiresAndKeepsOnlyCatalogMappings() {
         let suiteName = "odbr.product-search-tests-\(UUID().uuidString)"
         let defaults = UserDefaults(suiteName: suiteName)!
         let cache = ProductSearchCache(defaults: defaults)
-        let variant = ProductVariant(
-            id: "test",
-            familyName: "테스트 상품",
-            title: "플라스틱 형태",
-            selectionHint: "단단한 플라스틱 용기",
-            destination: .category(.plastic)
-        )
 
-        cache.save([variant], for: "테스트", now: Date(timeIntervalSince1970: 100))
-        #expect(cache.value(for: "테스트", now: Date(timeIntervalSince1970: 100 + 60))?.first?.id == "test")
+        cache.save(familyID: "cola", for: "테스트", now: Date(timeIntervalSince1970: 100))
+        #expect(cache.value(for: "테스트", now: Date(timeIntervalSince1970: 100 + 60)) == "cola")
         #expect(cache.value(for: "테스트", now: Date(timeIntervalSince1970: 100 + 31 * 24 * 60 * 60)) == nil)
         defaults.removePersistentDomain(forName: suiteName)
     }
@@ -486,6 +483,109 @@ struct odbrTests {
     @Test func officialPetGuideUsesLabelRemovalAndClosedCap() {
         #expect(DisposalCategory.pet.guideSteps.contains { $0.contains("라벨") })
         #expect(DisposalCategory.pet.guideSteps.contains { $0.contains("뚜껑을 닫아") })
+    }
+
+    @Test func policyCatalogCoversEverySelectableRouteWithSourceAndReviewDate() {
+        let policies = DisposalPolicyCatalog.policies
+        let routes = Set(policies.map(\.route))
+
+        #expect(routes == Set(DisposalRoute.selectableCases + [.unknown]))
+        #expect(policies.allSatisfy { !$0.sourceID.isEmpty })
+        #expect(policies.allSatisfy { !$0.reviewedAt.isEmpty })
+        #expect(policies.allSatisfy { !$0.effectiveDate.isEmpty })
+    }
+
+    @Test func clearPetRequiresClearBeverageBottleObservations() {
+        let clearBottle = observation(material: .pet, form: .beverageBottle, transparency: .clear)
+        let coloredBottle = observation(material: .pet, form: .beverageBottle, transparency: .colored)
+        let petTray = observation(material: .pet, form: .rigidContainerTray, transparency: .clear)
+
+        #expect(ObservationPolicyEngine.route(for: clearBottle) == .recyclable(.clearPETBottle))
+        #expect(ObservationPolicyEngine.route(for: coloredBottle) == .recyclable(.plasticContainerTray))
+        #expect(ObservationPolicyEngine.route(for: petTray) == .recyclable(.plasticContainerTray))
+    }
+
+    @Test func hazardsOverrideOrdinaryRecyclingRoutes() {
+        let pressureCan = observation(material: .metal, form: .beverageCan, hazards: [.pressurizedContainer])
+        let brokenBottle = observation(material: .glass, form: .glassBottle, hazards: [.brokenGlass, .sharpObject])
+        let damagedBattery = observation(material: .plastic, form: .battery, hazards: [.damagedBattery])
+
+        #expect(ObservationPolicyEngine.route(for: pressureCan) == .householdHazardousWaste)
+        #expect(ObservationPolicyEngine.route(for: brokenBottle) == .specialWasteBag)
+        #expect(ObservationPolicyEngine.route(for: damagedBattery) == .householdHazardousWaste)
+    }
+
+    @Test func highRiskCatalogItemsNeverUseOrdinaryRecyclingRoutes() {
+        let repository = ProductSearchRepository()
+        let receipt = repository.search("영수증").first?.family.variants ?? []
+        let tissue = repository.search("키친타월").first?.family.variants ?? []
+        let cookware = repository.search("프라이팬").first?.family.variants ?? []
+        let powerBank = repository.search("보조배터리").first?.family.variants ?? []
+        let brokenLighting = repository.search("깨진 형광등").first?.family.variants.first { $0.id.hasSuffix("-broken") }
+        let rubberGlove = repository.search("고무장갑").first?.family.variants ?? []
+
+        #expect(!receipt.contains { $0.destination == .recyclable(.paper) })
+        #expect(!tissue.contains { $0.destination == .recyclable(.paper) })
+        #expect(cookware.contains { $0.destination == .recyclable(.metalScrap) })
+        #expect(!cookware.contains { $0.destination == .recyclable(.metalCan) })
+        #expect(powerBank.allSatisfy { !$0.parts.contains { $0.name.contains("내장 배터리") } })
+        #expect(powerBank.contains { $0.flags.contains(.doNotDisassemble) })
+        #expect(brokenLighting?.destination != .lightingCollection)
+        #expect(!rubberGlove.contains { $0.destination == .recyclable(.vinylPackaging) })
+    }
+
+    @Test func correctionCandidatesPreserveModelOrderAndIncludeSpecialRoutes() {
+        let result = DisposalResult(
+            category: .plastic,
+            source: .multimodalAI,
+            confidence: 80,
+            evidences: [],
+            candidates: [.vinyl, .paperPack, .can]
+        )
+
+        #expect(CorrectionCandidateBuilder.ranked(for: result).map(\.route) == [
+            .recyclable(.vinylPackaging),
+            .recyclable(.paperPack),
+            .recyclable(.metalCan)
+        ])
+        #expect(CorrectionCandidateBuilder.allRoutes(excluding: result).contains(.batteryCollection))
+        #expect(CorrectionCandidateBuilder.allRoutes(excluding: result).contains(.householdHazardousWaste))
+    }
+
+    @Test func nephronEligibilityIsNotGrantedToGenericPetOrMetalObjects() {
+        #expect(DisposalPolicyCatalog.policy(for: .recyclable(.clearPETBottle)).nephronEligibility == .likelyEligible)
+        #expect(DisposalPolicyCatalog.policy(for: .recyclable(.metalCan)).nephronEligibility == .checkMachine)
+        #expect(DisposalPolicyCatalog.policy(for: .recyclable(.plasticContainerTray)).nephronEligibility == .notEligible)
+        #expect(DisposalPolicyCatalog.policy(for: .recyclable(.metalScrap)).nephronEligibility == .notEligible)
+
+        let beverageCan = ObservationPolicyEngine.decision(
+            from: observation(material: .metal, form: .beverageCan)
+        )
+        let foodCan = ObservationPolicyEngine.decision(
+            from: observation(material: .metal, form: .foodCan)
+        )
+        #expect(beverageCan.nephronEligibility == .checkMachine)
+        #expect(foodCan.nephronEligibility == .notEligible)
+    }
+
+    private func observation(
+        material: ObservedMaterial,
+        form: PackageForm,
+        transparency: Transparency = .unknown,
+        hazards: [DisposalHazard] = []
+    ) -> WasteObservation {
+        WasteObservation(
+            objectCandidates: ["테스트 품목"],
+            materialCandidates: [material],
+            packageForm: form,
+            transparency: transparency,
+            visibleMark: "",
+            contamination: .clean,
+            parts: [],
+            hazards: hazards,
+            captureIssue: .none,
+            confidence: 90
+        )
     }
 }
 

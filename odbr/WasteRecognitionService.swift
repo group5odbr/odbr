@@ -11,8 +11,22 @@ final class WasteRecognitionService {
 
     func analyzeWithReport(_ image: UIImage) async -> AnalysisReport {
         let focusedImage = RecognitionImagePreprocessor.centeredSubject(from: image)
-        let ocr = await markRecognizer.inspect(in: focusedImage)
-        let inference = await multimodalInferencer.infer(image: focusedImage)
+        async let ocrInspection = markRecognizer.inspect(in: focusedImage)
+        async let multimodalInference = multimodalInferencer.infer(image: image)
+        let (ocr, inference) = await (ocrInspection, multimodalInference)
+        guard !Task.isCancelled else {
+            return AnalysisReport(
+                result: DisposalResult(
+                    route: .unknown,
+                    source: .localFallback,
+                    confidence: 0,
+                    evidences: [DisposalEvidence(title: "분석 취소", detail: "요청이 취소되었어요.")],
+                    candidates: []
+                ),
+                ocr: ocr,
+                aiModel: inference.inspection
+            )
+        }
 
         let result = DisposalDecisionEngine.result(
             multimodalDecision: inference.decision,

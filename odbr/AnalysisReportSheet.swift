@@ -9,10 +9,9 @@ struct AnalysisReportSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.lg) {
-                    ReportSection(title: "최종 판정") {
-                        ReportRow(title: "분류", detail: report.result.title)
-                        ReportRow(title: "판정 방식", detail: report.result.source.title)
-                        ReportRow(title: "신뢰도", detail: confidenceText)
+                    ReportSection(title: "안내 근거") {
+                        ReportRow(title: "버리는 곳", detail: report.result.title)
+                        ReportRow(title: "확인 방식", detail: report.result.source.title)
 
                         if !report.result.candidates.isEmpty {
                             ReportRow(title: "다른 후보", detail: candidateText)
@@ -23,29 +22,31 @@ struct AnalysisReportSheet: View {
                         }
                     }
 
-                    DisclosureGroup("기술 상세") {
+                    #if DEBUG
+                    DisclosureGroup("개발용 기술 상세") {
                         VStack(alignment: .leading, spacing: AppTheme.Spacing.lg) {
-                            ReportSection(title: "Gemini 이미지 판정") {
+                            ReportSection(title: "Gemini 사진 분석") {
                                 ReportRow(title: "상태", detail: report.aiModel.status)
                                 ReportRow(title: "상세", detail: report.aiModel.detail)
                             }
 
                             ReportSection(title: "기기 내 표기 인식") {
                                 if let failureReason = report.ocr.failureReason {
-                                    ReportRow(title: "OCR 상태", detail: failureReason)
+                                    ReportRow(title: "글자 확인 상태", detail: failureReason)
                                 }
-                                ReportRow(title: "마크 판정", detail: signalDetail)
+                                ReportRow(title: "표시 확인 결과", detail: signalDetail)
                                 ReportRow(title: "인식 텍스트", detail: ocrText)
                             }
                         }
                     }
                     .font(.system(.headline, design: .rounded, weight: .semibold))
                     .tint(AppTheme.deepGreen)
+                    #endif
                 }
                 .padding(AppTheme.Spacing.lg)
             }
             .background(AppTheme.background.ignoresSafeArea())
-            .navigationTitle("분석 결과")
+            .navigationTitle("판단 근거")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -55,10 +56,6 @@ struct AnalysisReportSheet: View {
                 }
             }
         }
-    }
-
-    private var confidenceText: String {
-        report.result.isUncertain ? "판정 보류" : "\(report.result.confidence)%"
     }
 
     private var candidateText: String {

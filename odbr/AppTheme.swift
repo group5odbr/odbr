@@ -107,19 +107,43 @@ struct SecondaryActionButtonStyle: ButtonStyle {
 struct ScreenHeader: View {
     let title: String
     let subtitle: String
+    var onShowInformation: (() -> Void)? = nil
 
     var body: some View {
-        VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
-            Text(title)
-                .font(.system(size: 32, weight: .semibold, design: .rounded))
-                .foregroundStyle(AppTheme.primaryText)
-                .accessibilityAddTraits(.isHeader)
+        HStack(alignment: .top, spacing: AppTheme.Spacing.md) {
+            VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
+                Text(title)
+                    .font(.system(size: 32, weight: .semibold, design: .rounded))
+                    .foregroundStyle(AppTheme.primaryText)
+                    .accessibilityAddTraits(.isHeader)
 
-            Text(subtitle)
-                .font(.system(.body, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
-                .fixedSize(horizontal: false, vertical: true)
+                Text(subtitle)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundStyle(AppTheme.secondaryText)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 0)
+
+            if let onShowInformation {
+                Button(action: onShowInformation) {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(AppTheme.deepGreen)
+                        .frame(width: 44, height: 44)
+                        .background(AppTheme.card)
+                        .clipShape(RoundedRectangle(cornerRadius: AppTheme.Radius.small, style: .continuous))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: AppTheme.Radius.small, style: .continuous)
+                                .stroke(AppTheme.border, lineWidth: 1)
+                        }
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("설정 및 앱 정보")
+                .accessibilityIdentifier("app.information")
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 

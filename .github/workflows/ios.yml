@@ -1,0 +1,52 @@
+name: iOS quality gates
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select stable Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Require Xcode 26 or newer
+        run: |
+          major="$(xcodebuild -version | awk 'NR == 1 { split($2, value, "."); print value[1] }')"
+          test "$major" -ge 26
+
+      - name: Validate policy JSON and review metadata
+        run: |
+          jq -e 'length > 0 and all(.[]; (.sourceID | length > 0) and (.effectiveDate | length > 0) and (.reviewedAt | length > 0) and (.preparationSteps | type == "array"))' odbr/DisposalPolicies.json
+          duplicate_routes="$(jq -r '.[] | (.route.type + ":" + (.route.stream // ""))' odbr/DisposalPolicies.json | sort | uniq -d)"
+          test -z "$duplicate_routes"
+          plutil -lint odbr/PrivacyInfo.xcprivacy odbr/RemoteConfigDefaults.plist
+
+      - name: Check committed secret patterns
+        run: |
+          ! rg -n --hidden --glob '!odbr/GoogleService-Info.plist' --glob '!.git/**' --glob '!.github/workflows/ios.yml' '(BEGIN PRIVATE KEY|service_account|App Check debug token|FIREBASE_TOKEN=)' .
+
+      - name: Select available iPhone simulator
+        run: |
+          simulator_udid="$(xcrun simctl list devices available -j | jq -r '[.devices[][] | select(.name | startswith("iPhone"))][0].udid')"
+          test -n "$simulator_udid"
+          echo "SIMULATOR_UDID=$simulator_udid" >> "$GITHUB_ENV"
+
+      - name: Debug build
+        run: xcodebuild -project odbr.xcodeproj -scheme odbr -configuration Debug -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+
+      - name: Release build
+        run: xcodebuild -project odbr.xcodeproj -scheme odbr -configuration Release -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build
+
+      - name: Unit tests
+        run: xcodebuild -project odbr.xcodeproj -scheme odbr -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" -only-testing:odbrTests test
+
+      - name: UI smoke tests
+        run: xcodebuild -project odbr.xcodeproj -scheme odbr -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" -only-testing:odbrUITests test
