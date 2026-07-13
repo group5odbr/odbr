@@ -29,7 +29,11 @@ enum AppTab: Hashable {
 }
 
 struct ContentView: View {
-    @State private var selectedTab: AppTab = .scan
+    @State private var selectedTab: AppTab
+
+    init() {
+        _selectedTab = State(initialValue: AppTab.initialTab)
+    }
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -52,6 +56,32 @@ struct ContentView: View {
                 .tag(AppTab.nephron)
         }
         .tint(AppTheme.accent)
+        .accessibilityIdentifier("app.tabs")
+    }
+}
+
+private extension AppTab {
+    static var initialTab: AppTab {
+        #if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        guard
+            let flagIndex = arguments.firstIndex(of: "-initialTab"),
+            arguments.indices.contains(flagIndex + 1)
+        else {
+            return .scan
+        }
+
+        switch arguments[flagIndex + 1] {
+        case "guide":
+            return .guide
+        case "nephron":
+            return .nephron
+        default:
+            return .scan
+        }
+        #else
+        return .scan
+        #endif
     }
 }
 

@@ -7,30 +7,20 @@ struct NephronView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xl) {
-                    header
+                    ScreenHeader(
+                        title: "네프론",
+                        subtitle: "페트병과 캔은 회수기 이용 가능성을 함께 확인해요."
+                    )
                     mapCard
                     acceptedItems
                     officialLinkCard
                 }
-                .padding(AppTheme.Spacing.lg)
-                .padding(.bottom, AppTheme.Spacing.xxl)
+                .tabScreenPadding()
             }
             .background(AppTheme.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
+            .accessibilityIdentifier("nephron.screen")
         }
-    }
-
-    private var header: some View {
-        VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
-            Text("네프론")
-                .font(.system(size: 32, weight: .semibold, design: .rounded))
-                .foregroundStyle(AppTheme.primaryText)
-
-            Text("페트병과 캔은 회수기 이용 가능성을 함께 확인해요.")
-                .font(.system(.body, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-        .padding(.top, AppTheme.Spacing.lg)
     }
 
     private var mapCard: some View {
@@ -44,12 +34,12 @@ struct NephronView: View {
                         .font(.system(size: 54, weight: .semibold))
                         .foregroundStyle(AppTheme.accent)
 
-                    Text("가까운 회수기는 공식 안내에서 확인")
+                    Text("가까운 회수기 찾기")
                         .font(.system(.headline, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.primaryText)
                         .multilineTextAlignment(.center)
 
-                    Text("MVP에서는 수퍼빈 위치 안내로 연결합니다.")
+                    Text("현재 운영 중인 회수기 위치는 수퍼빈 공식 안내에서 확인할 수 있어요.")
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(AppTheme.secondaryText)
                         .multilineTextAlignment(.center)
@@ -104,7 +94,7 @@ struct NephronView: View {
                     Text("수퍼빈 공식 안내")
                         .font(.system(.headline, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.primaryText)
-                    Text("운영 여부와 위치는 공식 안내에서 확인하는 흐름으로 연결합니다.")
+                    Text("기기별 운영 여부와 위치를 방문 전에 확인해 주세요.")
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(AppTheme.secondaryText)
                 }
@@ -115,6 +105,7 @@ struct NephronView: View {
                     Label("공식 사이트 열기", systemImage: "arrow.up.right")
                 }
                 .buttonStyle(PrimaryActionButtonStyle())
+                .accessibilityIdentifier("nephron.officialLink")
             }
         }
         .utilityCard(highlighted: true)
@@ -144,10 +135,11 @@ private struct NephronMetric: View {
 }
 
 private struct NephronItem: Identifiable {
-    let id = UUID()
     let title: String
     let detail: String
     let systemImage: String
+
+    var id: String { title }
 
     static let examples = [
         NephronItem(title: "투명 페트병", detail: "내용물을 비우고 라벨을 분리해요.", systemImage: "drop.fill"),

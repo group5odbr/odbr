@@ -3,8 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 110;
+	objectVersion = 77;
 	objects = {
+
+/* Begin PBXBuildFile section */
+		30BE0C8C8F537CCB305FFE82 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7BED395AE0D0BB3558757D97 /* FirebaseCore */; };
+		6D8A0E6039C6E9297D3ABE44 /* FirebaseAILogic in Frameworks */ = {isa = PBXBuildFile; productRef = CC2B9DE1A3B558656AB09435 /* FirebaseAILogic */; };
+		AAE8380A6203A9BF6FD41276 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = A9554BF32DF82D33682308B5 /* FirebaseAppCheck */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		71431E2C2FFCCCAC0065E87A /* PBXContainerItemProxy */ = {
@@ -50,18 +56,27 @@
 /* Begin PBXFrameworksBuildPhase section */
 		71431E1B2FFCCCAB0065E87A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
+				30BE0C8C8F537CCB305FFE82 /* FirebaseCore in Frameworks */,
+				6D8A0E6039C6E9297D3ABE44 /* FirebaseAILogic in Frameworks */,
+				AAE8380A6203A9BF6FD41276 /* FirebaseAppCheck in Frameworks */,
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E282FFCCCAC0065E87A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E322FFCCCAC0065E87A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -99,10 +114,17 @@
 			);
 			buildRules = (
 			);
+			dependencies = (
+			);
 			fileSystemSynchronizedGroups = (
 				71431E202FFCCCAB0065E87A /* odbr */,
 			);
 			name = odbr;
+			packageProductDependencies = (
+				7BED395AE0D0BB3558757D97 /* FirebaseCore */,
+				CC2B9DE1A3B558656AB09435 /* FirebaseAILogic */,
+				A9554BF32DF82D33682308B5 /* FirebaseAppCheck */,
+			);
 			productName = odbr;
 			productReference = 71431E1E2FFCCCAB0065E87A /* odbr.app */;
 			productType = "com.apple.product-type.application";
@@ -124,6 +146,8 @@
 				71431E2E2FFCCCAC0065E87A /* odbrTests */,
 			);
 			name = odbrTests;
+			packageProductDependencies = (
+			);
 			productName = odbrTests;
 			productReference = 71431E2B2FFCCCAC0065E87A /* odbrTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -181,6 +205,9 @@
 			);
 			mainGroup = 71431E152FFCCCAB0065E87A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 71431E1F2FFCCCAB0065E87A /* Products */;
 			projectDirPath = "";
@@ -196,36 +223,48 @@
 /* Begin PBXResourcesBuildPhase section */
 		71431E1C2FFCCCAB0065E87A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E292FFCCCAC0065E87A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E332FFCCCAC0065E87A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		71431E1A2FFCCCAB0065E87A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E272FFCCCAC0065E87A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		71431E312FFCCCAC0065E87A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
 			files = (
 			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -243,7 +282,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		71431E3B2FFCCCAC0065E87A /* Debug configuration for PBXProject "odbr" */ = {
+		71431E3B2FFCCCAC0065E87A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -296,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -307,7 +346,7 @@
 			};
 			name = Debug;
 		};
-		71431E3C2FFCCCAC0065E87A /* Release configuration for PBXProject "odbr" */ = {
+		71431E3C2FFCCCAC0065E87A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -354,7 +393,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -364,27 +403,34 @@
 			};
 			name = Release;
 		};
-		71431E3E2FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbr" */ = {
+		71431E3E2FFCCCAC0065E87A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = odbr/odbr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "오디버려";
 				INFOPLIST_KEY_NSCameraUsageDescription = "쓰레기 사진을 촬영해 분리배출 방법을 안내하기 위해 카메라 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -397,27 +443,34 @@
 			};
 			name = Debug;
 		};
-		71431E3F2FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbr" */ = {
+		71431E3F2FFCCCAC0065E87A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = odbr/odbr.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "오디버려";
 				INFOPLIST_KEY_NSCameraUsageDescription = "쓰레기 사진을 촬영해 분리배출 방법을 안내하기 위해 카메라 접근이 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbr;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -430,7 +483,7 @@
 			};
 			name = Release;
 		};
-		71431E412FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrTests" */ = {
+		71431E412FFCCCAC0065E87A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -438,7 +491,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -452,7 +505,7 @@
 			};
 			name = Debug;
 		};
-		71431E422FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrTests" */ = {
+		71431E422FFCCCAC0065E87A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -460,7 +513,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -474,13 +527,14 @@
 			};
 			name = Release;
 		};
-		71431E442FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrUITests" */ = {
+		71431E442FFCCCAC0065E87A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -494,13 +548,14 @@
 			};
 			name = Debug;
 		};
-		71431E452FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrUITests" */ = {
+		71431E452FFCCCAC0065E87A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = Y7URQU6626;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.6;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hyeonkyu.odbrUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -520,37 +575,69 @@
 		71431E192FFCCCAB0065E87A /* Build configuration list for PBXProject "odbr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				71431E3B2FFCCCAC0065E87A /* Debug configuration for PBXProject "odbr" */,
-				71431E3C2FFCCCAC0065E87A /* Release configuration for PBXProject "odbr" */,
+				71431E3B2FFCCCAC0065E87A /* Debug */,
+				71431E3C2FFCCCAC0065E87A /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		71431E3D2FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbr" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				71431E3E2FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbr" */,
-				71431E3F2FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbr" */,
+				71431E3E2FFCCCAC0065E87A /* Debug */,
+				71431E3F2FFCCCAC0065E87A /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		71431E402FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				71431E412FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrTests" */,
-				71431E422FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrTests" */,
+				71431E412FFCCCAC0065E87A /* Debug */,
+				71431E422FFCCCAC0065E87A /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		71431E432FFCCCAC0065E87A /* Build configuration list for PBXNativeTarget "odbrUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				71431E442FFCCCAC0065E87A /* Debug configuration for PBXNativeTarget "odbrUITests" */,
-				71431E452FFCCCAC0065E87A /* Release configuration for PBXNativeTarget "odbrUITests" */,
+				71431E442FFCCCAC0065E87A /* Debug */,
+				71431E452FFCCCAC0065E87A /* Release */,
 			);
+			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.16.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7BED395AE0D0BB3558757D97 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		A9554BF32DF82D33682308B5 /* FirebaseAppCheck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAppCheck;
+		};
+		CC2B9DE1A3B558656AB09435 /* FirebaseAILogic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAILogic;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 71431E162FFCCCAB0065E87A /* Project object */;
-	validationLevel = 1;
 }

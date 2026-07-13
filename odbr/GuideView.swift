@@ -6,12 +6,15 @@ struct GuideView: View {
     private var categories: [DisposalCategory] {
         let trimmedText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedText.isEmpty else {
-            return DisposalCategory.allCases
+            return DisposalCategory.disposalCases
         }
 
-        return DisposalCategory.allCases.filter { category in
+        return DisposalCategory.disposalCases.filter { category in
             category.title.localizedCaseInsensitiveContains(trimmedText)
             || category.materialHint.localizedCaseInsensitiveContains(trimmedText)
+            || category.searchKeywords.contains {
+                $0.localizedCaseInsensitiveContains(trimmedText)
+            }
         }
     }
 
@@ -19,54 +22,33 @@ struct GuideView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xl) {
-                    header
-                    searchField
+                    ScreenHeader(
+                        title: "배출가이드",
+                        subtitle: "재질명이나 품목을 찾아 빠르게 확인해요."
+                    )
+                    GuideSearchField(text: $searchText)
                     categoryList
                     cautionCard
                 }
-                .padding(AppTheme.Spacing.lg)
-                .padding(.bottom, AppTheme.Spacing.xxl)
+                .tabScreenPadding()
             }
             .background(AppTheme.background.ignoresSafeArea())
             .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-
-    private var header: some View {
-        VStack(alignment: .leading, spacing: AppTheme.Spacing.sm) {
-            Text("배출가이드")
-                .font(.system(size: 32, weight: .semibold, design: .rounded))
-                .foregroundStyle(AppTheme.primaryText)
-
-            Text("재질명이나 품목을 찾아 빠르게 확인해요.")
-                .font(.system(.body, design: .rounded))
-                .foregroundStyle(AppTheme.secondaryText)
-        }
-        .padding(.top, AppTheme.Spacing.lg)
-    }
-
-    private var searchField: some View {
-        HStack(spacing: AppTheme.Spacing.sm) {
-            Image(systemName: "magnifyingglass")
-                .foregroundStyle(AppTheme.secondaryText)
-
-            TextField("PET, 캔류, 비닐류", text: $searchText)
-                .textInputAutocapitalization(.never)
-                .font(.system(.body, design: .rounded))
-        }
-        .padding(AppTheme.Spacing.lg)
-        .background(AppTheme.card)
-        .clipShape(RoundedRectangle(cornerRadius: AppTheme.Radius.medium, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: AppTheme.Radius.medium, style: .continuous)
-                .stroke(AppTheme.border, lineWidth: 1)
+            .scrollDismissesKeyboard(.interactively)
+            .accessibilityIdentifier("guide.screen")
         }
     }
 
     private var categoryList: some View {
-        VStack(spacing: AppTheme.Spacing.md) {
-            ForEach(categories) { category in
-                GuideCategoryCard(category: category)
+        Group {
+            if categories.isEmpty {
+                GuideEmptySearchCard(query: searchText)
+            } else {
+                VStack(spacing: AppTheme.Spacing.md) {
+                    ForEach(categories) { category in
+                        GuideCategoryCard(category: category)
+                    }
+                }
             }
         }
     }
@@ -79,13 +61,78 @@ struct GuideView: View {
                     Text("지역 기준이 다를 수 있어요")
                         .font(.system(.headline, design: .rounded, weight: .semibold))
                         .foregroundStyle(AppTheme.primaryText)
-                    Text("오염된 비닐, 코팅 종이컵, OTHER 표기는 지자체 기준을 함께 확인하세요.")
+                    Text("오염 비닐·코팅 종이컵·OTHER는 지역 안내를 확인하세요.")
                         .font(.system(.subheadline, design: .rounded))
                         .foregroundStyle(AppTheme.secondaryText)
                 }
             }
         }
+        .utilityCard(warning: true)
+    }
+}
+
+private struct GuideSearchField: View {
+    @Binding var text: String
+
+    var body: some View {
+        HStack(spacing: AppTheme.Spacing.sm) {
+            Image(systemName: "magnifyingglass")
+                .foregroundStyle(AppTheme.secondaryText)
+                .accessibilityHidden(true)
+
+            TextField("PET, 캔류, 비닐류", text: $text)
+                .textInputAutocapitalization(.never)
+                .submitLabel(.search)
+                .font(.system(.body, design: .rounded))
+                .accessibilityLabel("배출 품목 검색")
+
+            if !text.isEmpty {
+                Button {
+                    text = ""
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(AppTheme.secondaryText)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("검색어 지우기")
+            }
+        }
+        .padding(.horizontal, AppTheme.Spacing.lg)
+        .frame(minHeight: 52)
+        .background(AppTheme.card)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.Radius.medium, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: AppTheme.Radius.medium, style: .continuous)
+                .stroke(AppTheme.border, lineWidth: 1)
+        }
+        .accessibilityIdentifier("guide.search")
+    }
+}
+
+private struct GuideEmptySearchCard: View {
+    let query: String
+
+    var body: some View {
+        VStack(spacing: AppTheme.Spacing.md) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundStyle(AppTheme.secondaryText)
+                .accessibilityHidden(true)
+
+            Text("검색 결과가 없어요")
+                .font(.system(.headline, design: .rounded, weight: .semibold))
+                .foregroundStyle(AppTheme.primaryText)
+
+            Text("‘\(query)’와 비슷한 재질명이나 품목명으로 검색해 보세요.")
+                .font(.system(.subheadline, design: .rounded))
+                .foregroundStyle(AppTheme.secondaryText)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity)
         .utilityCard()
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("guide.empty")
     }
 }
 
@@ -117,6 +164,7 @@ private struct GuideCategoryCard: View {
                             .font(.system(.caption, weight: .bold))
                             .foregroundStyle(AppTheme.accent)
                             .frame(width: 18, height: 18)
+                            .accessibilityHidden(true)
 
                         Text(step)
                             .font(.system(.subheadline, design: .rounded))
@@ -127,5 +175,6 @@ private struct GuideCategoryCard: View {
             }
         }
         .utilityCard()
+        .accessibilityElement(children: .combine)
     }
 }

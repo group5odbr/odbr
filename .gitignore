@@ -1,0 +1,22 @@
+# Xcode build products and local UI state
+Pods/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+.codegraph
+.debug-journal.md
+
+# Local-only configuration
+.env
+.env.*
+!.env.example
+*.private.xcconfig
+
+# Server credentials and signing keys must never be committed.
+# GoogleService-Info.plist is intentionally not ignored: it is Firebase's
+# client configuration and is required in the app bundle.
+service-account*.json
+ServiceAccount*.json
+*.pem
+*.p12
+*.p8

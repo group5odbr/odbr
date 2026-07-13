@@ -10,34 +10,46 @@ import XCTest
 final class odbrUITests: XCTestCase {
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testDefaultLaunchShowsScanFlow() {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        XCTAssertTrue(app.scrollViews["scan.screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["scan.capture"].exists)
+        XCTAssertTrue(app.tabBars.buttons["스캔"].isSelected)
     }
 
     @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+    func testGuideSearchShowsEmptyState() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-initialTab", "guide"]
+        app.launch()
+
+        let searchField = app.textFields["guide.search"]
+        XCTAssertTrue(searchField.waitForExistence(timeout: 5))
+
+        searchField.tap()
+        searchField.typeText("xyz")
+
+        XCTAssertTrue(app.descendants(matching: .any)["guide.empty"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.buttons["검색어 지우기"].exists)
+    }
+
+    @MainActor
+    func testNephronLaunchShowsOfficialGuide() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-initialTab", "nephron"]
+        app.launch()
+
+        XCTAssertTrue(app.scrollViews["nephron.screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["가까운 회수기 찾기"].exists)
+        XCTAssertTrue(app.staticTexts["투명 페트병"].exists)
+
+        app.scrollViews["nephron.screen"].swipeUp()
+        XCTAssertTrue(app.descendants(matching: .any)["nephron.officialLink"].waitForExistence(timeout: 2))
     }
 }
