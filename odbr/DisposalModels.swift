@@ -119,7 +119,7 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
     var guideSteps: [String] {
         switch self {
         case .pet:
-            ["내용물을 비우고 헹구기", "라벨과 뚜껑 분리", "가능하면 압착 후 배출"]
+            ["내용물을 비우고 물로 헹구기", "라벨을 제거하기", "가능하면 압착한 뒤 뚜껑을 닫아 배출"]
         case .plastic:
             ["내용물을 비우고 헹구기", "다른 재질 부착물 분리", "오염이 심하면 지자체 기준 확인"]
         case .vinyl:
@@ -129,9 +129,9 @@ nonisolated enum DisposalCategory: String, CaseIterable, Codable, Identifiable, 
         case .paperPack:
             ["내용물을 비우고 헹구기", "빨대와 비닐 코팅 부착물 제거", "펼쳐 말린 뒤 종이팩류로 배출"]
         case .can:
-            ["내용물을 비우기", "가능하면 가볍게 압착", "페트병과 함께 네프론 회수 가능성 확인"]
+            ["내용물을 비우고 이물질을 제거하기", "가능하면 가볍게 압착하기", "금속캔류 배출함 또는 지역 기준에 맞춰 배출"]
         case .glass:
-            ["내용물을 비우고 헹구기", "뚜껑 분리", "깨진 유리는 신문지에 감싸 별도 배출"]
+            ["내용물을 비우고 물로 헹구기", "소주·맥주 빈용기보증금 대상이면 소매점 반납 확인", "깨진 유리는 신문지에 감싸 종량제·지자체 기준으로 배출"]
         case .styrofoam:
             ["테이프와 운송장 제거", "음식물이나 이물질 제거", "오염이 심하면 일반쓰레기 후보로 확인"]
         case .general:

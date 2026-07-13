@@ -2,15 +2,15 @@ import SwiftUI
 
 enum AppTab: Hashable {
     case scan
-    case guide
+    case search
     case nephron
 
     var title: String {
         switch self {
         case .scan:
             "스캔"
-        case .guide:
-            "배출가이드"
+        case .search:
+            "검색"
         case .nephron:
             "네프론"
         }
@@ -20,8 +20,8 @@ enum AppTab: Hashable {
         switch self {
         case .scan:
             "camera.fill"
-        case .guide:
-            "list.bullet"
+        case .search:
+            "magnifyingglass"
         case .nephron:
             "mappin.and.ellipse"
         }
@@ -43,11 +43,11 @@ struct ContentView: View {
                 }
                 .tag(AppTab.scan)
 
-            GuideView()
+            SearchView()
                 .tabItem {
-                    Label(AppTab.guide.title, systemImage: AppTab.guide.systemImage)
+                    Label(AppTab.search.title, systemImage: AppTab.search.systemImage)
                 }
-                .tag(AppTab.guide)
+                .tag(AppTab.search)
 
             NephronView()
                 .tabItem {
@@ -72,8 +72,8 @@ private extension AppTab {
         }
 
         switch arguments[flagIndex + 1] {
-        case "guide":
-            return .guide
+        case "guide", "search":
+            return .search
         case "nephron":
             return .nephron
         default:

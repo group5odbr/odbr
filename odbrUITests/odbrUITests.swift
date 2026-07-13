@@ -26,17 +26,34 @@ final class odbrUITests: XCTestCase {
     @MainActor
     func testGuideSearchShowsEmptyState() {
         let app = XCUIApplication()
-        app.launchArguments += ["-initialTab", "guide"]
+        app.launchArguments += ["-initialTab", "search"]
         app.launch()
 
-        let searchField = app.textFields["guide.search"]
+        let searchField = app.textFields["search.field"]
         XCTAssertTrue(searchField.waitForExistence(timeout: 5))
 
         searchField.tap()
         searchField.typeText("xyz")
 
-        XCTAssertTrue(app.descendants(matching: .any)["guide.empty"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.descendants(matching: .any)["search.empty"].waitForExistence(timeout: 2))
         XCTAssertTrue(app.buttons["검색어 지우기"].exists)
+    }
+
+    @MainActor
+    func testProductSearchShowsColaPackageChoices() {
+        let app = XCUIApplication()
+        app.launchArguments += ["-initialTab", "search"]
+        app.launch()
+
+        let searchField = app.textFields["search.field"]
+        XCTAssertTrue(searchField.waitForExistence(timeout: 5))
+        searchField.tap()
+        searchField.typeText("콜라")
+
+        XCTAssertTrue(app.descendants(matching: .any)["search.family.cola"].waitForExistence(timeout: 2))
+        XCTAssertTrue(app.staticTexts["알루미늄·철 콜라캔"].exists)
+        XCTAssertTrue(app.staticTexts["무색 투명 PET 콜라병"].exists)
+        XCTAssertTrue(app.staticTexts["유리 콜라병"].exists)
     }
 
     @MainActor

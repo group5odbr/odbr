@@ -69,13 +69,13 @@ All spacing derives from 4pt.
 
 - Primary content uses a single-column mobile layout.
 - Cards use 16-24pt internal padding depending on density.
-- Bottom tab navigation separates the three core jobs: scan, guide, and Nephron.
+- Bottom tab navigation separates the three core jobs: scan, search, and Nephron.
 
 ## 5. Components
 
 ### App Tab Shell
 - **Structure**: Native `TabView` with three tabs.
-- **Variants**: Scan, Guide, Nephron.
+- **Variants**: Scan, Search, Nephron.
 - **States**: selected, unselected.
 - **Accessibility**: SF Symbols plus text labels.
 - **Motion**: Native tab transition only.
@@ -101,11 +101,11 @@ All spacing derives from 4pt.
 - **Accessibility**: Confidence shown as text, not color only.
 - **Motion**: Result appears with native insertion animation.
 
-### Guide Row
-- **Structure**: Category icon tile, title, material hint, and preparation steps.
-- **Variants**: normal, caution.
-- **States**: default.
-- **Accessibility**: Each row reads as one disposal guide item.
+### Search Flow
+- **Structure**: Product/brand search field, quick queries, family result cards, variant selection, and a part-by-part disposal detail screen.
+- **Variants**: empty search, local catalog result, AI-assisted result, error/retry.
+- **States**: default, loading, cached, unsupported, network error.
+- **Accessibility**: Search input and every product variant have stable identifiers; product names never silently choose a material when multiple forms are possible. Each row reads as one disposal guide item.
 - **Motion**: None.
 
 ## 6. Motion & Interaction
@@ -126,5 +126,5 @@ Mixed: tonal-shift for page depth, hairline borders for card boundaries, and ver
 | Level | Treatment | Use |
 | --- | --- | --- |
 | Base | Tonal background | App canvas |
-| Card | 1pt border + white fill | Guide and result cards |
+| Card | 1pt border + white fill | Search and result cards |
 | Primary | Soft green shadow | Main scan surface |

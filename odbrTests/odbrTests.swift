@@ -408,6 +408,85 @@ struct odbrTests {
         #expect(result.specificSteps.count == 3)
         #expect(result.specificSteps.contains { $0.contains("라벨") && $0.contains("비닐류") })
     }
+
+    @Test func productCatalogHasTheRequiredOfflineCoverage() {
+        #expect(ProductSearchCatalog.families.count >= 65)
+        let aliases = ProductSearchCatalog.families.flatMap(\.aliases)
+        #expect(aliases.count >= 150)
+        #expect(Set(ProductSearchCatalog.families.map(\.id)).count == ProductSearchCatalog.families.count)
+    }
+
+    @Test func colaSearchKeepsAllCommonPackageChoices() {
+        let repository = ProductSearchRepository()
+        let hit = repository.search("코카 콜라").first
+
+        #expect(hit?.family.id == "cola")
+        #expect(hit?.family.variants.map(\.destination).contains(.category(.can)) == true)
+        #expect(hit?.family.variants.map(\.destination).contains(.category(.pet)) == true)
+        #expect(hit?.family.variants.map(\.destination).contains(.category(.glass)) == true)
+    }
+
+    @Test func colaPetChoiceContainsPartsAndCorrectSeparationPolicies() {
+        let cola = ProductSearchCatalog.families.first { $0.id == "cola" }
+        let pet = cola?.variants.first { $0.id.hasSuffix("-pet") }
+
+        #expect(pet?.destination == .category(.pet))
+        #expect(pet?.parts.first { $0.name == "라벨" }?.destination == .category(.vinyl))
+        #expect(pet?.parts.first { $0.name == "뚜껑" }?.separation == .keepAttached)
+    }
+
+    @Test func productShapeWordsPrioritizeTheMatchingVariantWithoutAutoSelectingIt() {
+        let repository = ProductSearchRepository()
+        let cola = repository.search("페트병콜라").first
+        let soju = repository.search("유리공병 소주병").first
+
+        #expect(cola?.family.id == "cola")
+        #expect(cola?.matchedVariantIDs.first?.hasSuffix("-pet") == true)
+        #expect(soju?.family.id == "soju")
+        #expect(soju?.matchedVariantIDs.first?.hasSuffix("-returnableGlass") == true)
+    }
+
+    @Test func sojuAndDollSearchExposeMaterialAndSpecialRoutes() {
+        let repository = ProductSearchRepository()
+        let soju = repository.search("참이슬").first?.family.variants ?? []
+        let doll = repository.search("인형").first?.family.variants ?? []
+
+        #expect(soju.contains { $0.destination == .category(.glass) && $0.flags.contains(.returnDepositBottle) })
+        #expect(soju.contains { $0.destination == .category(.plastic) })
+        #expect(doll.contains { $0.destination == .largeWaste })
+        #expect(doll.contains { $0.destination == .smallElectronicsCollection })
+    }
+
+    @Test func productSearchNormalizesBrandSpacingAndCase() {
+        let repository = ProductSearchRepository()
+
+        #expect(repository.search("Coca-Cola").first?.family.id == "cola")
+        #expect(repository.search("  PET 소주병 ").first?.family.id == "soju")
+        #expect(repository.search("보조 배터리").first?.family.id == "power_bank")
+    }
+
+    @Test func productSearchCacheExpiresAndKeepsGeneratedChoices() {
+        let suiteName = "odbr.product-search-tests-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: suiteName)!
+        let cache = ProductSearchCache(defaults: defaults)
+        let variant = ProductVariant(
+            id: "test",
+            familyName: "테스트 상품",
+            title: "플라스틱 형태",
+            selectionHint: "단단한 플라스틱 용기",
+            destination: .category(.plastic)
+        )
+
+        cache.save([variant], for: "테스트", now: Date(timeIntervalSince1970: 100))
+        #expect(cache.value(for: "테스트", now: Date(timeIntervalSince1970: 100 + 60))?.first?.id == "test")
+        #expect(cache.value(for: "테스트", now: Date(timeIntervalSince1970: 100 + 31 * 24 * 60 * 60)) == nil)
+        defaults.removePersistentDomain(forName: suiteName)
+    }
+
+    @Test func officialPetGuideUsesLabelRemovalAndClosedCap() {
+        #expect(DisposalCategory.pet.guideSteps.contains { $0.contains("라벨") })
+        #expect(DisposalCategory.pet.guideSteps.contains { $0.contains("뚜껑을 닫아") })
+    }
 }
 
 private struct DescribedTestError: Error, CustomStringConvertible {
