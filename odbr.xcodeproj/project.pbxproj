@@ -210,7 +210,6 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				71842563300819FE00E6CE91 /* XCRemoteSwiftPackageReference "app-check" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 71431E1F2FFCCCAB0065E87A /* Products */;
@@ -613,14 +612,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		71842563300819FE00E6CE91 /* XCRemoteSwiftPackageReference "app-check" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/google/app-check.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.3.1;
-			};
-		};
 		81FC914C6600F2EAF0C81889 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
