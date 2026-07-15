@@ -1,0 +1,1033 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="오디버려 앱과 개인정보처리방침 웹페이지의 개인정보 처리 기준을 안내합니다."
+    />
+    <meta name="theme-color" content="#f7faf3" />
+    <title>개인정보처리방침 | 오디버려</title>
+    <link rel="icon" href="./app-icon.png" />
+    <style>
+      :root {
+        color-scheme: light;
+        --background: #f7faf3;
+        --surface: #ffffff;
+        --mint: #eaf6ed;
+        --mint-strong: #d7efdf;
+        --accent: #16a765;
+        --deep-green: #087247;
+        --ink: #17211b;
+        --muted: #66736b;
+        --border: #e5ede4;
+        --warning-surface: #fff9e8;
+        --warning-border: #f0dfab;
+        --shadow: 0 24px 70px rgba(8, 83, 48, 0.1);
+        --content-width: 1160px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        overflow-wrap: break-word;
+        background: var(--background);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+          "Noto Sans KR", "Segoe UI", sans-serif;
+        line-height: 1.7;
+        word-break: keep-all;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      a:focus-visible {
+        outline: 3px solid rgba(22, 167, 101, 0.38);
+        outline-offset: 4px;
+        border-radius: 6px;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 100;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+        transform: translateY(-160%);
+        transition: transform 160ms ease;
+      }
+
+      .skip-link:focus {
+        transform: translateY(0);
+      }
+
+      .site-header {
+        position: relative;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(var(--content-width), calc(100% - 48px));
+        margin: 0 auto;
+        padding: 24px 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+      }
+
+      .brand img {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        box-shadow: 0 8px 22px rgba(8, 114, 71, 0.16);
+      }
+
+      .header-label {
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .hero {
+        position: relative;
+        width: min(var(--content-width), calc(100% - 48px));
+        margin: 0 auto;
+        padding: 92px 0 82px;
+      }
+
+      .hero::before {
+        position: absolute;
+        top: -170px;
+        right: -220px;
+        width: 620px;
+        height: 620px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(188, 233, 203, 0.64),
+          rgba(234, 246, 237, 0) 70%
+        );
+        content: "";
+        pointer-events: none;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+        max-width: 820px;
+      }
+
+      .eyebrow {
+        margin: 0 0 16px;
+        color: var(--deep-green);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.11em;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      h1 {
+        margin-bottom: 26px;
+        font-size: clamp(46px, 6vw, 72px);
+        line-height: 1.08;
+        letter-spacing: -0.065em;
+      }
+
+      .hero-description {
+        max-width: 700px;
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.75;
+        letter-spacing: -0.02em;
+      }
+
+      .policy-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 22px;
+        margin-top: 30px;
+        color: #415047;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .policy-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .policy-meta span::before {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--accent);
+        content: "";
+      }
+
+      .summary {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        width: min(var(--content-width), calc(100% - 48px));
+        margin: 0 auto 72px;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background: var(--border);
+        box-shadow: var(--shadow);
+      }
+
+      .summary-item {
+        min-height: 176px;
+        padding: 30px;
+        background: rgba(255, 255, 255, 0.94);
+      }
+
+      .summary-number {
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        margin-bottom: 18px;
+        border-radius: 14px;
+        background: var(--mint);
+        color: var(--deep-green);
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      .summary h2 {
+        margin-bottom: 8px;
+        font-size: 19px;
+        line-height: 1.35;
+        letter-spacing: -0.035em;
+      }
+
+      .summary p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .policy-layout {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 64px;
+        align-items: start;
+        width: min(var(--content-width), calc(100% - 48px));
+        margin: 0 auto;
+        padding-bottom: 120px;
+      }
+
+      .toc {
+        position: sticky;
+        top: 24px;
+        padding: 22px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(16px);
+      }
+
+      .toc h2 {
+        margin-bottom: 14px;
+        font-size: 14px;
+        letter-spacing: -0.02em;
+      }
+
+      .toc ol {
+        display: grid;
+        gap: 9px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: toc;
+      }
+
+      .toc li {
+        counter-increment: toc;
+      }
+
+      .toc a {
+        display: grid;
+        grid-template-columns: 22px 1fr;
+        gap: 4px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.45;
+        transition: color 160ms ease;
+      }
+
+      .toc a::before {
+        color: #91a097;
+        content: counter(toc, decimal-leading-zero);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .toc a:hover {
+        color: var(--deep-green);
+      }
+
+      .policy-content {
+        min-width: 0;
+      }
+
+      .policy-section {
+        padding: 0 0 64px;
+        scroll-margin-top: 28px;
+      }
+
+      .policy-section + .policy-section {
+        padding-top: 64px;
+        border-top: 1px solid var(--border);
+      }
+
+      .section-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 40px;
+        height: 28px;
+        margin-bottom: 14px;
+        padding: 0 10px;
+        border-radius: 9px;
+        background: var(--mint);
+        color: var(--deep-green);
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.04em;
+      }
+
+      .policy-section h2 {
+        margin-bottom: 20px;
+        font-size: clamp(27px, 3vw, 36px);
+        line-height: 1.24;
+        letter-spacing: -0.05em;
+      }
+
+      .policy-section h3 {
+        margin: 30px 0 10px;
+        font-size: 18px;
+        line-height: 1.4;
+        letter-spacing: -0.035em;
+      }
+
+      .policy-section p,
+      .policy-section li,
+      .policy-section dd {
+        color: #465249;
+        font-size: 16px;
+      }
+
+      .policy-section ul,
+      .policy-section ol {
+        margin: 14px 0 0;
+        padding-left: 22px;
+      }
+
+      .policy-section li + li {
+        margin-top: 8px;
+      }
+
+      .notice {
+        margin: 24px 0;
+        padding: 20px 22px;
+        border: 1px solid var(--warning-border);
+        border-radius: 18px;
+        background: var(--warning-surface);
+      }
+
+      .notice strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #7b5906;
+      }
+
+      .notice p {
+        margin-bottom: 0;
+        color: #6b5a2e;
+        font-size: 14px;
+      }
+
+      .info-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin: 24px 0 0;
+      }
+
+      .info-card {
+        padding: 20px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--surface);
+      }
+
+      .info-card h3 {
+        margin: 0 0 8px;
+        font-size: 16px;
+      }
+
+      .info-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .table-wrap {
+        width: 100%;
+        margin-top: 24px;
+        overflow-x: auto;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--surface);
+      }
+
+      table {
+        width: 100%;
+        min-width: 680px;
+        border-collapse: collapse;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      th,
+      td {
+        padding: 17px 18px;
+        border-bottom: 1px solid var(--border);
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--mint);
+        color: var(--deep-green);
+        font-size: 12px;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      td {
+        color: #465249;
+        line-height: 1.6;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: 0;
+      }
+
+      .detail-list {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        margin: 24px 0 0;
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: var(--surface);
+      }
+
+      .detail-list dt,
+      .detail-list dd {
+        margin: 0;
+        padding: 15px 18px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .detail-list dt {
+        background: var(--mint);
+        color: var(--deep-green);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .detail-list dd {
+        font-size: 14px;
+      }
+
+      .detail-list dt:last-of-type,
+      .detail-list dd:last-of-type {
+        border-bottom: 0;
+      }
+
+      .source-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .source-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 13px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--surface);
+        color: var(--deep-green);
+        font-size: 13px;
+        font-weight: 750;
+        transition: border-color 160ms ease, transform 160ms ease;
+      }
+
+      .source-links a::after {
+        content: "↗";
+        font-size: 12px;
+      }
+
+      .source-links a:hover {
+        border-color: var(--mint-strong);
+        transform: translateY(-1px);
+      }
+
+      .contact-card {
+        margin-top: 24px;
+        padding: 26px;
+        border-radius: 22px;
+        background: var(--deep-green);
+        color: #fff;
+      }
+
+      .contact-card h3,
+      .contact-card p {
+        color: inherit;
+      }
+
+      .contact-card h3 {
+        margin-top: 0;
+      }
+
+      .contact-card p {
+        margin-bottom: 0;
+        color: rgba(255, 255, 255, 0.76);
+        font-size: 14px;
+      }
+
+      footer {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 24px;
+        width: min(var(--content-width), calc(100% - 48px));
+        margin: 0 auto;
+        padding: 32px 0 42px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .footer-brand {
+        font-size: 16px;
+        color: var(--ink);
+      }
+
+      .footer-brand img {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+      }
+
+      @media (max-width: 900px) {
+        .summary {
+          grid-template-columns: 1fr;
+        }
+
+        .summary-item {
+          min-height: auto;
+        }
+
+        .policy-layout {
+          grid-template-columns: 1fr;
+          gap: 42px;
+        }
+
+        .toc {
+          position: static;
+        }
+
+        .toc ol {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .site-header,
+        .hero,
+        .summary,
+        .policy-layout,
+        footer {
+          width: min(100% - 32px, var(--content-width));
+        }
+
+        .site-header {
+          padding: 18px 0;
+        }
+
+        .brand {
+          font-size: 18px;
+        }
+
+        .brand img {
+          width: 38px;
+          height: 38px;
+        }
+
+        .header-label {
+          font-size: 12px;
+        }
+
+        .hero {
+          padding: 68px 0 62px;
+        }
+
+        h1 {
+          font-size: clamp(42px, 13vw, 58px);
+        }
+
+        .hero-description {
+          font-size: 17px;
+        }
+
+        .summary {
+          margin-bottom: 56px;
+          border-radius: 22px;
+        }
+
+        .summary-item {
+          padding: 24px;
+        }
+
+        .policy-layout {
+          padding-bottom: 80px;
+        }
+
+        .toc {
+          padding: 20px;
+        }
+
+        .toc ol,
+        .info-list {
+          grid-template-columns: 1fr;
+        }
+
+        .policy-section {
+          padding-bottom: 52px;
+        }
+
+        .policy-section + .policy-section {
+          padding-top: 52px;
+        }
+
+        .policy-section h2 {
+          font-size: 28px;
+        }
+
+        .detail-list {
+          grid-template-columns: 1fr;
+        }
+
+        .detail-list dt,
+        .detail-list dd {
+          border-bottom: 1px solid var(--border);
+        }
+
+        .detail-list dd:last-of-type {
+          border-bottom: 0;
+        }
+
+        footer {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#policy-content">본문 바로가기</a>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="오디버려 개인정보처리방침 맨 위로">
+        <img src="./app-icon.png" alt="" width="42" height="42" />
+        <span>오디버려</span>
+      </a>
+      <span class="header-label">개인정보처리방침</span>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <p class="eyebrow">PRIVACY POLICY</p>
+          <h1 id="page-title">개인정보처리방침</h1>
+          <p class="hero-description">
+            오디버려는 필요한 정보만 사용하고, 사용자가 선택한 기능을 제공하는
+            데 필요한 범위 안에서 처리합니다. 어떤 정보가 왜 필요한지 아래에서
+            투명하게 안내합니다.
+          </p>
+          <div class="policy-meta" aria-label="방침 기본 정보">
+            <span>시행일 2026년 7월 16일</span>
+            <span>버전 1.0</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="summary" aria-label="개인정보 처리 핵심 요약">
+        <article class="summary-item">
+          <span class="summary-number">01</span>
+          <h2>사진은 선택할 때만 전송해요</h2>
+          <p>AI 사진 분석에 동의하고 직접 촬영하거나 고른 사진만 Google Gemini로 전송합니다.</p>
+        </article>
+        <article class="summary-item">
+          <span class="summary-number">02</span>
+          <h2>계정과 광고 추적이 없어요</h2>
+          <p>회원가입을 요구하지 않으며, 광고 목적의 개인정보 수집이나 앱 간 추적을 하지 않습니다.</p>
+        </article>
+        <article class="summary-item">
+          <span class="summary-number">03</span>
+          <h2>선택을 바꿀 수 있어요</h2>
+          <p>앱 설정에서 사진 분석 동의를 철회할 수 있고, 앱 삭제로 기기에 저장된 정보를 지울 수 있습니다.</p>
+        </article>
+      </section>
+
+      <div class="policy-layout">
+        <nav class="toc" aria-label="개인정보처리방침 목차">
+          <h2>목차</h2>
+          <ol>
+            <li><a href="#scope">적용 범위</a></li>
+            <li><a href="#data">처리하는 정보</a></li>
+            <li><a href="#purpose">처리 목적</a></li>
+            <li><a href="#retention">보유 및 파기</a></li>
+            <li><a href="#transfer">외부 처리와 국외 이전</a></li>
+            <li><a href="#rights">이용자의 권리</a></li>
+            <li><a href="#security">안전성 확보 조치</a></li>
+            <li><a href="#children">아동의 개인정보</a></li>
+            <li><a href="#contact">문의 및 권리구제</a></li>
+            <li><a href="#changes">방침 변경</a></li>
+          </ol>
+        </nav>
+
+        <article class="policy-content" id="policy-content">
+          <section class="policy-section" id="scope">
+            <span class="section-number">01</span>
+            <h2>적용 범위</h2>
+            <p>
+              이 개인정보처리방침은 오디버려 iOS 앱과 이 개인정보처리방침
+              웹페이지에 적용됩니다. 오디버려는 사진 분석, 품목 검색, 분리배출
+              안내 기능을 제공하며 별도의 회원 계정을 운영하지 않습니다.
+            </p>
+            <div class="info-list">
+              <div class="info-card">
+                <h3>수집하지 않는 정보</h3>
+                <p>이름, 전화번호, 이메일, 주소, 연락처, 결제정보를 직접 입력받지 않습니다.</p>
+              </div>
+              <div class="info-card">
+                <h3>웹페이지의 처리</h3>
+                <p>이 페이지 자체에는 쿠키, 광고, 방문 분석 도구, 입력 양식을 사용하지 않습니다.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="policy-section" id="data">
+            <span class="section-number">02</span>
+            <h2>처리하는 정보</h2>
+            <p>기능을 이용하는 과정에서 다음 정보가 처리될 수 있습니다.</p>
+            <div class="table-wrap" role="region" aria-label="처리 정보 표" tabindex="0">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">구분</th>
+                    <th scope="col">처리 항목</th>
+                    <th scope="col">처리 시점</th>
+                    <th scope="col">필수 여부</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>AI 사진 분석</td>
+                    <td>사용자가 촬영하거나 선택한 사진, 사진에서 생성된 AI 분석 요청과 결과</td>
+                    <td>동의 후 사진 분석을 실행할 때</td>
+                    <td>선택</td>
+                  </tr>
+                  <tr>
+                    <td>AI 품목 검색</td>
+                    <td>사용자가 입력하고 AI 검색을 요청한 검색어, AI 검색 결과</td>
+                    <td>로컬 검색 결과가 없을 때 사용자가 AI 검색을 직접 실행하면</td>
+                    <td>선택</td>
+                  </tr>
+                  <tr>
+                    <td>서비스 설정</td>
+                    <td>Firebase 설치 식별자, 앱 버전, 원격 설정 요청에 필요한 기술정보</td>
+                    <td>앱의 기능 설정을 확인할 때</td>
+                    <td>앱 운영에 필요</td>
+                  </tr>
+                  <tr>
+                    <td>요청 보호</td>
+                    <td>앱 또는 기기의 무결성 확인 자료, App Check 토큰, IP 주소 등 통신정보</td>
+                    <td>보호된 Firebase 기능을 요청할 때</td>
+                    <td>앱 운영에 필요</td>
+                  </tr>
+                  <tr>
+                    <td>기기 내 저장</td>
+                    <td>사진 분석 동의 여부, 정규화된 AI 검색어와 연결된 품목군 결과</td>
+                    <td>동의를 저장하거나 AI 검색 결과를 재사용할 때</td>
+                    <td>선택 기능 이용 시</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="notice">
+              <strong>사진을 보내기 전에 확인해 주세요</strong>
+              <p>
+                얼굴, 주소, 영수증, 차량번호, 신분증 등 불필요한 개인정보가 사진에
+                포함되지 않도록 촬영 범위를 조정해 주세요. 민감한 정보가 담긴 사진은
+                분석에 사용하지 않는 것이 좋습니다.
+              </p>
+            </div>
+          </section>
+
+          <section class="policy-section" id="purpose">
+            <span class="section-number">03</span>
+            <h2>처리 목적</h2>
+            <ul>
+              <li>사진 속 물건의 형태와 재질을 확인하고 분리배출 안내를 제공하기 위해 처리합니다.</li>
+              <li>검색어를 앱의 검수된 품목군과 연결해 알맞은 검색 결과를 제공하기 위해 처리합니다.</li>
+              <li>AI 기능의 사용 가능 여부, 모델 버전, 요청 제한 등 앱 운영 설정을 전달하기 위해 처리합니다.</li>
+              <li>비정상적이거나 위조된 앱의 요청을 막고 Firebase 자원을 보호하기 위해 처리합니다.</li>
+            </ul>
+            <p>
+              위 목적이 바뀌는 경우에는 이 방침을 수정해 알리며, 필요한 경우 별도의
+              동의를 받습니다. 오디버려는 광고 개인화나 다른 앱·웹사이트를 가로지르는
+              이용자 추적을 목적으로 정보를 사용하지 않습니다.
+            </p>
+          </section>
+
+          <section class="policy-section" id="retention">
+            <span class="section-number">04</span>
+            <h2>보유 기간과 파기 방법</h2>
+            <div class="table-wrap" role="region" aria-label="보유 기간 표" tabindex="0">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">정보</th>
+                    <th scope="col">보유 기간</th>
+                    <th scope="col">파기 방법</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>촬영·선택한 사진</td>
+                    <td>분석 요청과 결과 표시 중 기기 메모리에서 일시 처리</td>
+                    <td>화면 종료 또는 앱 종료 시 메모리에서 해제하며, 운영자가 별도 데이터베이스에 저장하지 않음</td>
+                  </tr>
+                  <tr>
+                    <td>사진 분석 동의 여부</td>
+                    <td>동의를 철회하거나 앱을 삭제할 때까지 기기에 저장</td>
+                    <td>앱 설정에서 동의를 끄거나 앱 삭제</td>
+                  </tr>
+                  <tr>
+                    <td>AI 검색 캐시</td>
+                    <td>기기에 최대 30일, 최대 100개 검색어 결과</td>
+                    <td>기간 만료 시 자동 삭제하거나 앱 삭제</td>
+                  </tr>
+                  <tr>
+                    <td>Firebase 설치 식별자</td>
+                    <td>Google의 Firebase 보유 기준에 따름</td>
+                    <td>삭제 요청 처리 후 Google의 활성·백업 시스템에서 단계적으로 삭제</td>
+                  </tr>
+                  <tr>
+                    <td>AI 요청·응답 및 기술정보</td>
+                    <td>Gemini API 및 Firebase의 적용 약관과 보유 기준에 따름</td>
+                    <td>각 제공자의 삭제·비식별화 절차에 따름</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Firebase AI Logic 자체는 AI 입력과 출력을 저장하지 않지만, 실제 AI
+              처리를 담당하는 Gemini Developer API의 보유·이용 기준이 별도로
+              적용됩니다. 법령에 따라 보존할 의무가 생기는 경우에는 해당 기간 동안
+              분리해 보관한 뒤 지체 없이 파기합니다.
+            </p>
+          </section>
+
+          <section class="policy-section" id="transfer">
+            <span class="section-number">05</span>
+            <h2>외부 처리와 국외 이전</h2>
+            <p>
+              오디버려는 AI 분석과 안전한 서비스 운영을 위해 Google의 Firebase 및
+              Gemini 서비스를 사용합니다. 이 과정에서 아래 정보가 네트워크를 통해
+              국외에서 처리될 수 있습니다.
+            </p>
+            <dl class="detail-list">
+              <dt>이전받는 자</dt>
+              <dd>Google LLC 및 Google의 서비스 처리 관계사·재수탁자</dd>
+              <dt>이전 국가</dt>
+              <dd>미국을 포함해 Google 또는 그 대리인이 시설을 운영하는 국가</dd>
+              <dt>이전 일시·방법</dt>
+              <dd>해당 기능 사용 시 암호화된 네트워크를 통한 전송</dd>
+              <dt>이전 항목</dt>
+              <dd>선택한 사진 또는 AI 검색어, AI 요청·응답, Firebase 설치 식별자, 앱·기기 무결성 자료, IP 주소 등 통신정보</dd>
+              <dt>이전 목적</dt>
+              <dd>Gemini AI 분석, 원격 앱 설정, 요청 출처 확인과 서비스 부정 이용 방지</dd>
+              <dt>보유·이용 기간</dt>
+              <dd>Google의 Firebase 개인정보 보호 안내 및 Gemini API 약관에 따른 기간</dd>
+              <dt>거부 방법·영향</dt>
+              <dd>사진 분석 동의를 철회하거나 AI 검색을 사용하지 않을 수 있습니다. 필수 운영 통신을 거부하면 일부 또는 전체 기능을 이용하기 어렵습니다.</dd>
+            </dl>
+            <div class="notice">
+              <strong>Gemini API의 데이터 이용 기준</strong>
+              <p>
+                Gemini Developer API는 요금제와 프로젝트 설정에 따라 입력·출력의
+                이용 및 보유 기준이 달라질 수 있습니다. 무료 서비스에서는 Google이
+                제출 내용과 생성 결과를 제품·서비스 개선에 사용할 수 있고 사람의
+                검토가 포함될 수 있으므로, 개인정보나 민감정보를 보내지 마세요.
+              </p>
+            </div>
+            <div class="source-links" aria-label="외부 처리 관련 공식 문서">
+              <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noreferrer">Firebase 개인정보 보호</a>
+              <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noreferrer">Gemini API 추가 약관</a>
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Google 개인정보처리방침</a>
+            </div>
+          </section>
+
+          <section class="policy-section" id="rights">
+            <span class="section-number">06</span>
+            <h2>이용자의 권리와 행사 방법</h2>
+            <p>이용자는 언제든지 다음과 같이 자신의 선택을 바꿀 수 있습니다.</p>
+            <ul>
+              <li><strong>사진 분석 동의 철회:</strong> 앱의 ‘설정 및 정보’에서 ‘사진 분석 동의’를 끕니다.</li>
+              <li><strong>기기 내 정보 삭제:</strong> 앱을 삭제하면 기기에 저장된 동의 상태와 검색 캐시가 함께 삭제됩니다.</li>
+              <li><strong>처리 내역 문의:</strong> 아래 개인정보 보호 담당 채널로 열람, 정정, 삭제, 처리정지에 관한 요청을 할 수 있습니다.</li>
+            </ul>
+            <p>
+              법정대리인은 관계 법령에 따라 아동의 개인정보에 관한 권리를 행사할 수
+              있습니다. 본인 또는 정당한 대리인인지 확인하는 데 필요한 최소한의
+              정보를 요청할 수 있으며, 요청은 관계 법령이 정한 기간과 범위 안에서
+              처리합니다.
+            </p>
+          </section>
+
+          <section class="policy-section" id="security">
+            <span class="section-number">07</span>
+            <h2>안전성 확보 조치</h2>
+            <ul>
+              <li>AI 요청을 HTTPS로 암호화해 전송합니다.</li>
+              <li>Firebase App Check와 Apple App Attest를 사용해 정상 앱에서 온 요청인지 확인합니다.</li>
+              <li>앱이 직접 보관하는 정보를 최소화하고, 사진을 운영자의 별도 데이터베이스에 저장하지 않습니다.</li>
+              <li>오류 로그에 검색어나 사진 내용을 일반 공개 정보로 기록하지 않도록 보호 수준을 적용합니다.</li>
+              <li>원격 설정을 통해 문제가 발생한 AI 기능을 중지할 수 있도록 운영합니다.</li>
+            </ul>
+          </section>
+
+          <section class="policy-section" id="children">
+            <span class="section-number">08</span>
+            <h2>만 14세 미만 아동의 개인정보</h2>
+            <p>
+              오디버려는 회원가입을 제공하지 않고 이용자의 나이를 수집하지 않습니다.
+              만 14세 미만 아동이 AI 사진 분석이나 AI 검색을 이용할 때에는 법정대리인과
+              함께 이용하고, 개인정보가 포함된 사진이나 검색어를 전송하지 않도록
+              주의해 주세요. 아동의 개인정보가 처리된 사실을 알게 된 경우 담당 채널로
+              알려 주시면 확인 후 필요한 조치를 하겠습니다.
+            </p>
+          </section>
+
+          <section class="policy-section" id="contact">
+            <span class="section-number">09</span>
+            <h2>개인정보 보호 담당과 권리구제</h2>
+            <div class="contact-card">
+              <h3>개인정보 보호 담당</h3>
+              <p>
+                담당: 오디버려 운영자<br />
+                문의: App Store의 ‘앱 지원’ 채널
+              </p>
+            </div>
+            <!-- 출시 전 실제 지원 URL 또는 문의 이메일로 위 문의 수단을 확정하세요. -->
+            <p>
+              개인정보 침해에 관한 상담이나 신고가 필요한 경우 아래 기관에 문의할 수
+              있습니다. 아래 기관은 오디버려와 별개의 공공기관입니다.
+            </p>
+            <ul>
+              <li>개인정보침해 신고센터: 국번 없이 118</li>
+              <li>개인정보분쟁조정위원회: 1833-6972</li>
+              <li>경찰청 사이버범죄 신고시스템: 국번 없이 182</li>
+            </ul>
+            <div class="source-links" aria-label="개인정보 권리구제 기관">
+              <a href="https://privacy.kisa.or.kr" target="_blank" rel="noreferrer">개인정보침해 신고센터</a>
+              <a href="https://www.kopico.go.kr" target="_blank" rel="noreferrer">개인정보분쟁조정위원회</a>
+              <a href="https://ecrm.police.go.kr" target="_blank" rel="noreferrer">경찰청 사이버범죄 신고</a>
+            </div>
+          </section>
+
+          <section class="policy-section" id="changes">
+            <span class="section-number">10</span>
+            <h2>방침의 변경</h2>
+            <p>
+              법령, 서비스 또는 외부 처리 방식이 바뀌면 이 페이지를 통해 변경 내용을
+              알립니다. 이용자의 권리에 중요한 변경이 있는 경우에는 시행 전에 앱 안의
+              안내 등 알기 쉬운 방법으로 추가 고지합니다.
+            </p>
+            <ul>
+              <li>공고일: 2026년 7월 16일</li>
+              <li>시행일: 2026년 7월 16일</li>
+            </ul>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="#top" aria-label="오디버려 개인정보처리방침 맨 위로">
+        <img src="./app-icon.png" alt="" width="34" height="34" />
+        <span>오디버려</span>
+      </a>
+      <span>© 2026 오디버려</span>
+    </footer>
+  </body>
+</html>
