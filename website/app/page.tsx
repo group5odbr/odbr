@@ -76,6 +76,7 @@ export default function Home() {
           <span>오디버려</span>
         </a>
         <div className="nav-links">
+          <a href="/technology">AI 기술</a>
           <a href="#features">주요 기능</a>
           <a href="#how-it-works">사용 방법</a>
           <AppStoreLink compact />
